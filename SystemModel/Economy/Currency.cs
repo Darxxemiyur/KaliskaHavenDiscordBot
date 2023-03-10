@@ -10,7 +10,7 @@
 	/// <summary>
 	/// Currency
 	/// </summary>
-	public struct Currency
+	public sealed class Currency
 	{
 		public CurrencyType CurrencyType {
 			get; set;

@@ -13,7 +13,7 @@ namespace KaliskaHaven.Economy
 		/// </summary>
 		/// <param name="currency"></param>
 		/// <returns></returns>
-		public Currency Deposit(Currency currency);
+		public TransactionLog Deposit(Currency currency);
 		/// <summary>
 		/// Get specific Wallet's currency.
 		/// </summary>
@@ -29,6 +29,6 @@ namespace KaliskaHaven.Economy
 		/// </summary>
 		/// <param name="currency"></param>
 		/// <returns></returns>
-		public WithdrawResult Withdraw(Currency currency);
+		public TransactionLog Withdraw(Currency currency);
 	}
 }

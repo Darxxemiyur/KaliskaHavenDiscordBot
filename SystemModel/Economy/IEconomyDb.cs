@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop
+namespace KaliskaHaven.Economy
 {
-	public class ShopItem
+	public interface IEconomyDb
 	{
+		public Task UpdateWalled(IWallet wallet);
 	}
 }

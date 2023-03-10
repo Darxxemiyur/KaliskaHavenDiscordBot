@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KaliskaHaven.Economy
+namespace KaliskaHaven.Shop
 {
-	public interface IEconomyDatabase
+	public interface IPreRequestiment
 	{
+		Task<bool> DoesSatisfy(ICustomer customer);
 	}
 }
