@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
+    <ProjectReference Include="..\Inventory\Inventory.csproj" />
+    <ProjectReference Include="..\KaliskaEconomy\Economy.csproj" />
+    <ProjectReference Include="..\KaliskaShop\Shop.csproj" />
+    <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
+    <ProjectReference Include="..\SocialModel\SocialModel.csproj" />
+  </ItemGroup>
+
+</Project>

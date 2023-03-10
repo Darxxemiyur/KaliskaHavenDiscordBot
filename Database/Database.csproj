@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="linq2db" Version="5.0.0" />
+    <PackageReference Include="linq2db.EntityFrameworkCore" Version="7.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql" Version="7.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+    <PackageReference Include="Npgsql.Json.NET" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
+    <ProjectReference Include="..\DisUILangs\DisUILangs.csproj" />
+    <ProjectReference Include="..\Inventory\Inventory.csproj" />
+    <ProjectReference Include="..\KaliskaEconomy\Economy.csproj" />
+    <ProjectReference Include="..\KaliskaShop\Shop.csproj" />
+    <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
+    <ProjectReference Include="..\SocialModel\SocialModel.csproj" />
+  </ItemGroup>
+
+</Project>

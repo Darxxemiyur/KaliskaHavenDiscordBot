@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+    <RootNamespace>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
+    <ProjectReference Include="..\DiscordUI\DiscordUI.csproj" />
+    <ProjectReference Include="..\DisUILangs\DisUILangs.csproj" />
+    <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="bot.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties bot_1settings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y $(ProjectDir)bot.settings.json $(ProjectDir)$(OutDir)bot.settings.json" />
+  </Target>-->
+
+</Project>
