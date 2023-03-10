@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <AnalysisLevel>6.0</AnalysisLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DisCatSharp" Version="10.3.2" />
+    <PackageReference Include="DisCatSharp.ApplicationCommands" Version="10.3.2" />
+    <PackageReference Include="DisCatSharp.Common" Version="10.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
+  </ItemGroup>
+
+</Project>
