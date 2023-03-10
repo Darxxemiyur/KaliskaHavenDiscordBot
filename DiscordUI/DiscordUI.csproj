@@ -10,11 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
-    <ProjectReference Include="..\Inventory\Inventory.csproj" />
-    <ProjectReference Include="..\KaliskaEconomy\Economy.csproj" />
-    <ProjectReference Include="..\KaliskaShop\Shop.csproj" />
     <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
-    <ProjectReference Include="..\SocialModel\SocialModel.csproj" />
+    <ProjectReference Include="..\SystemModel\SystemModel.csproj" />
   </ItemGroup>
 
 </Project>

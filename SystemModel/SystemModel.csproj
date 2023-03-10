@@ -8,4 +8,8 @@
     <RootNamespace>KaliskaHaven</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="SocialModel\" />
+  </ItemGroup>
+
 </Project>

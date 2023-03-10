@@ -1,5 +1,7 @@
 ﻿using KaliskaHaven.Economy;
 
+using Shop;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,16 @@ namespace KaliskaHaven.Shop
 		public Task<IWallet> CustomerWallet {
 			get;
 		}
-
+		public IAsyncEnumerable<ICartItem> Cart {
+			get;
+		}
+		public Task<ICartItem> AddToCard(ShopItem item);
+	}
+	public interface ICartItem
+	{
+		ShopItem ShopItem {
+			get;
+		}
+		Task Remove();
 	}
 }

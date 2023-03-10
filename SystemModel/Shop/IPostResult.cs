@@ -8,7 +8,7 @@ namespace KaliskaHaven.Shop
 {
 	public interface IPostResult
 	{
-		Task<bool> TryApplyOnCustomer(ICustomer customer);
+		Task<bool> TryApplyOnCustomer(ICustomer customer, ICartItem details);
 		Task Revert(ICustomer customer);
 	}
 }

@@ -8,6 +8,7 @@ namespace KaliskaHaven.Economy
 {
 	public interface IEconomyDb
 	{
-		public Task UpdateWalled(IWallet wallet);
+		public Task UpdateWallet(IWallet wallet);
+		public Task LogTransaction(TransactionLog log);
 	}
 }

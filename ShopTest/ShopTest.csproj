@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KaliskaShop\Shop.csproj" />
+    <ProjectReference Include="..\SystemModel\SystemModel.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DiscordUI\DiscordUI.csproj" />
-    <ProjectReference Include="..\SocialModel\SocialModel.csproj" />
   </ItemGroup>
 
 </Project>

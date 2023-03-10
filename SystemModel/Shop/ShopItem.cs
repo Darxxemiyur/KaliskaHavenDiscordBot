@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-	public interface IShopItem
+	public sealed class ShopItem
 	{
-		LinkedList<IPreRequestiment> PreRequestiments {
-			get;
+		public LinkedList<IRequirement> PreRequestiments {
+			get; set;
 		}
-		LinkedList<IPostResult> PostResults {
-			get;
+		public LinkedList<IPostResult> PostResults {
+			get; set;
 		}
 	}
 }

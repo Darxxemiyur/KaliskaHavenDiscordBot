@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace KaliskaHaven.Shop
 {
-	public interface IPreRequestiment
+	public interface IRequirement
 	{
-		Task<bool> DoesSatisfy(ICustomer customer);
+		string RequirementType {
+			get;
+		}
 	}
 }

@@ -1,69 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KaliskaHaven.Economy
+﻿namespace KaliskaHaven.Economy
 {
-	/// <summary>
-	/// Performed transaction kind.
-	/// </summary>
-	public enum TranscationKind
-	{
-		/// <summary>
-		/// Deposit transaction performed.
-		/// </summary>
-		Deposit,
-		/// <summary>
-		/// Withdrawal transaction performed.
-		/// </summary>
-		Withdrawal,
-		/// <summary>
-		/// Exchange transaction performed.
-		/// </summary>
-		Exchange,
-		/// <summary>
-		/// Transfer transaction performed.
-		/// </summary>
-		Transfer,
-		/// <summary>
-		/// Transaction created, but has no effect.
-		/// </summary>
-		FailedGeneral,
-		/// <summary>
-		/// Transaction created, but has no effect.
-		/// </summary>
-		FailedDeposit,
-		/// <summary>
-		/// Transaction created, but has no effect.
-		/// </summary>
-		FailedWithdrawal,
-		/// <summary>
-		/// Transaction created, but has no effect.
-		/// </summary>
-		FailedExchange,
-		/// <summary>
-		/// Transaction created, but has no effect.
-		/// </summary>
-		FailedTransfer,
-	}
 	public sealed class TransactionLog
 	{
 		public TranscationKind Kind {
-			get;
+			get; set;
 		}
 		public IWallet? From {
-			get;
+			get; set;
 		}
 		public IWallet? To {
-			get;
+			get; set;
 		}
 		public Currency? Withdrawn {
-			get;
+			get; set;
 		}
 		public Currency? Deposited {
-			get;
+			get; set;
 		}
 		public TransactionLog() => Kind = TranscationKind.FailedGeneral;
 		public TransactionLog(TranscationKind kind, IWallet wallet, Currency quantity)

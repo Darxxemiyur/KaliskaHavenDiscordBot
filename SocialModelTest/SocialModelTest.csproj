@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SocialModel\SocialModel.csproj" />
+    <ProjectReference Include="..\SystemModel\SystemModel.csproj" />
   </ItemGroup>
 
 </Project>
