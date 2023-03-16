@@ -2,7 +2,7 @@
 
 using Name.Bayfaderix.Darxxemiyur.General;
 
-namespace KaliskaHaven.Shop.External;
+namespace KaliskaHaven.Glue.Shop;
 
 public interface IIdentWallet : IWallet
 {
@@ -11,11 +11,11 @@ public interface IIdentWallet : IWallet
 	/// </summary>
 	/// <param name="currency"></param>
 	/// <returns></returns>
-	new Task<IIdentifiable<TransactionLog>> Deposit(Currency currency);
+	new Task<IIdentifiable<ITransactionLog>> Deposit(Currency currency);
 
 	/// <summary>
 	/// </summary>
 	/// <param name="currency"></param>
 	/// <returns></returns>
-	new Task<IIdentifiable<TransactionLog>> Withdraw(Currency currency);
+	new Task<IIdentifiable<ITransactionLog>> Withdraw(Currency currency);
 }

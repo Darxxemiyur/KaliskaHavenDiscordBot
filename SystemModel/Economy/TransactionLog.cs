@@ -1,16 +1,18 @@
-﻿namespace KaliskaHaven.Economy;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
 
-public sealed class TransactionLog
+namespace KaliskaHaven.Economy;
+
+public sealed class TransactionLog : ITransactionLog
 {
 	public TranscationKind Kind {
 		get; set;
 	}
 
-	public IWallet? From {
+	public IIdentifiable<IWallet>? From {
 		get; set;
 	}
 
-	public IWallet? To {
+	public IIdentifiable<IWallet>? To {
 		get; set;
 	}
 
@@ -24,7 +26,7 @@ public sealed class TransactionLog
 
 	public TransactionLog() => Kind = TranscationKind.FailedGeneral;
 
-	public TransactionLog(TranscationKind kind, IWallet wallet, Currency quantity)
+	public TransactionLog(TranscationKind kind, IIdentifiable<IWallet> wallet, Currency quantity)
 	{
 		if (kind is TranscationKind.Withdrawal or TranscationKind.FailedWithdrawal)
 		{
@@ -43,7 +45,7 @@ public sealed class TransactionLog
 		Kind = kind;
 	}
 
-	public TransactionLog(TranscationKind kind, IWallet from, IWallet to, Currency withdrawn, Currency deposited)
+	public TransactionLog(TranscationKind kind, IIdentifiable<IWallet> from, IIdentifiable<IWallet> to, Currency withdrawn, Currency deposited)
 	{
 		if (kind is not TranscationKind.Transfer and not TranscationKind.Exchange and not TranscationKind.FailedTransfer and not TranscationKind.FailedExchange)
 			throw new InvalidOperationException();
@@ -52,5 +54,14 @@ public sealed class TransactionLog
 		To = to;
 		Withdrawn = withdrawn;
 		Deposited = deposited;
+	}
+
+	public TransactionLog(ITransactionLog log)
+	{
+		Kind = log.Kind;
+		From = log.From;
+		To = log.To;
+		Withdrawn = log.Withdrawn;
+		Deposited = log.Deposited;
 	}
 }

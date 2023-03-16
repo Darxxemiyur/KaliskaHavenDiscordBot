@@ -9,13 +9,13 @@ public interface IWallet
 	/// </summary>
 	/// <param name="currency"></param>
 	/// <returns></returns>
-	Task<IIdentifiable<TransactionLog>> Deposit(Currency currency);
+	Task<IIdentifiable<ITransactionLog>> Deposit(Currency currency);
 
 	/// <summary>
 	/// </summary>
 	/// <param name="currency"></param>
 	/// <returns></returns>
-	Task<IIdentifiable<TransactionLog>> Withdraw(Currency currency);
+	Task<IIdentifiable<ITransactionLog>> Withdraw(Currency currency);
 
 	/// <summary>
 	/// Get specific Wallet's currency.

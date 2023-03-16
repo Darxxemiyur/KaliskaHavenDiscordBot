@@ -1,6 +1,6 @@
 ﻿using Name.Bayfaderix.Darxxemiyur.General;
 
-namespace KaliskaHaven.Shop.External;
+namespace KaliskaHaven.Glue.Shop;
 
 public interface ICheck
 {

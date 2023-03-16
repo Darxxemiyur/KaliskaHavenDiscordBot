@@ -10,11 +10,11 @@ public sealed class ShopItem : IShopItem, IIdentifiable<IShopItem>
 		get; set;
 	}
 
-	public LinkedList<IRequirement> PreRequestiments {
+	public IEnumerable<IRequirement> PreRequestiments {
 		get; set;
 	}
 
-	public LinkedList<IPostResult> PostResults {
+	public IEnumerable<IPostResult> PostResults {
 		get; set;
 	}
 

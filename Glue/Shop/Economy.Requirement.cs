@@ -1,8 +1,9 @@
 ﻿using KaliskaHaven.Economy;
+using KaliskaHaven.Shop;
 
-using IWallet = KaliskaHaven.Shop.External.IIdentWallet;
+using IWallet = KaliskaHaven.Glue.Shop.IIdentWallet;
 
-namespace KaliskaHaven.Shop.External;
+namespace KaliskaHaven.Glue.Shop;
 
 public class EconomyRequirement : IRequirement
 {

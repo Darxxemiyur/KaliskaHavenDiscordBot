@@ -1,6 +1,7 @@
 ﻿using KaliskaHaven.Economy;
+using KaliskaHaven.Shop;
 
-namespace KaliskaHaven.Shop.External;
+namespace KaliskaHaven.Glue.Shop;
 
 public abstract class EconomyPostResult : IPostResult
 {

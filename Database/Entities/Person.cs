@@ -1,4 +1,5 @@
-﻿using KaliskaHaven.SocialModel;
+﻿using KaliskaHaven.Database.Economy;
+using KaliskaHaven.SocialModel;
 
 using Name.Bayfaderix.Darxxemiyur.General;
 
@@ -10,17 +11,17 @@ public sealed class Person : IUser
 		get; set;
 	}
 
+	public Wallet Wallet {
+		get; set;
+	}
+
 	public IAsyncEnumerable<IIdentifiable<IGroup>> Groups {
 		get;
 	}
 
-	public IIdentity? Identity {
-		get;
-	}
+	public IIdentity? Identity => throw new NotImplementedException();
 
-	public IUser? Identifyable {
-		get;
-	}
+	public IUser? Identifyable => this;
 
 	public Type Type {
 		get;

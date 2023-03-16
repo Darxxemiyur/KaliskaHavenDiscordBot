@@ -2,11 +2,11 @@
 
 public interface IShopItem
 {
-	LinkedList<IRequirement> PreRequestiments {
+	IEnumerable<IRequirement> PreRequestiments {
 		get;
 	}
 
-	LinkedList<IPostResult> PostResults {
+	IEnumerable<IPostResult> PostResults {
 		get;
 	}
 }

@@ -12,28 +12,24 @@ public sealed class WithdrawResult
 	/// <summary>
 	/// Check for WithdrawResult.IsSuccessful.
 	/// </summary>
-	public Currency? Withdrawn {
-		get;
-	}
+	public Currency? Withdrawn => Transaction?.Withdrawn;
 
 	/// <summary>
 	/// The transaction.
 	/// </summary>
-	public TransactionLog? Transaction {
+	public ITransactionLog? Transaction {
 		get;
 	}
 
 	public WithdrawResult()
 	{
 		IsSuccesful = false;
-		Withdrawn = null;
 		Transaction = null;
 	}
 
-	public WithdrawResult(Currency amount, TransactionLog transaction)
+	public WithdrawResult(ITransactionLog transaction)
 	{
 		IsSuccesful = true;
-		Withdrawn = amount;
 		Transaction = transaction;
 	}
 }

@@ -11,7 +11,7 @@ public enum CurrencyType
 /// <summary>
 /// Currency
 /// </summary>
-public sealed class Currency
+public class Currency
 {
 	public CurrencyType CurrencyType {
 		get; set;

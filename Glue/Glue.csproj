@@ -14,10 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Economy\" />
     <Folder Include="Inventory\" />
     <Folder Include="Social\" />
-    <Folder Include="Shop\" />
   </ItemGroup>
 
 

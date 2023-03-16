@@ -37,7 +37,6 @@
 
   <ItemGroup>
     <Folder Include="Inventory\" />
-    <Folder Include="Economy\" />
   </ItemGroup>
 
 </Project>

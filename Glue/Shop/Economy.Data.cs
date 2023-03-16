@@ -1,6 +1,6 @@
 ﻿using KaliskaHaven.Economy;
 
-namespace KaliskaHaven.Shop.External;
+namespace KaliskaHaven.Glue.Shop;
 
 public interface IEconomyData
 {
