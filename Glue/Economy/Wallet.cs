@@ -46,7 +46,7 @@ namespace KaliskaHaven.Glue.Economy
 			return transaction;
 		}
 
-		public bool Equals<TId>(IIdentifiable<TId> to) => ((IIdentifiable<IWallet>)_wallet).Equals(to);
+		public bool Equals<TId>(IIdentifiable<TId> to) => to is IIdentifiable<IWallet> wa && wa is IDbWallet dw && dw.ID == ID;
 
 		public async Task<Currency?> Get(CurrencyType currency)
 		{

@@ -1,14 +1,14 @@
-﻿using KaliskaHaven.Economy;
+﻿using KaliskaHaven.Database.Economy;
+using KaliskaHaven.Economy;
 using KaliskaHaven.Shop;
 
-using IWallet = KaliskaHaven.Glue.Shop.IIdentWallet;
 
 namespace KaliskaHaven.Glue.Shop;
 
 public class EconomyRequirement : IRequirement
 {
 	public string RequirementType => nameof(EconomyRequirement);
-	private static readonly Type[] RTypes = new Type[] { typeof(IWallet) };
+	private static readonly Type[] RTypes = new Type[] { typeof(IDbWallet) };
 	public IEnumerable<Type> RequiredTypes => RTypes;
 	public Currency Price => Data.Money;
 
@@ -24,7 +24,7 @@ public class EconomyRequirement : IRequirement
 
 		var res = await commie.TellInternalAsync(new EcoTellMessage(EcoTellMsgEnum.GetWallet));
 
-		if (res.Code != 0 || res.Result is not IWallet wallet)
+		if (res.Code != 0 || res.Result is not IDbWallet wallet)
 			return false;
 
 		var currency = await wallet.Get(Price.CurrencyType);

@@ -1,5 +1,8 @@
-﻿using KaliskaHaven.Economy;
+﻿using KaliskaHaven.Database.Economy;
+using KaliskaHaven.Economy;
 using KaliskaHaven.Shop;
+
+using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Glue.Shop;
 
@@ -26,18 +29,18 @@ public abstract class EconomyPostResult : IPostResult
 		await this.WithdrawAndLog(customer, wallet, details, this.CalculatePrice(details));
 	}
 
-	protected abstract Task WithdrawAndLog(ICustomer customer, IIdentWallet wallet, ICartItem details, Currency currency);
+	protected abstract Task WithdrawAndLog(ICustomer customer, IDbWallet wallet, ICartItem details, Currency currency);
 
 	protected Currency CalculatePrice(ICartItem citem) => new() {
 		CurrencyType = Price.CurrencyType,
 		Quantity = (long)Math.Round(Price.Quantity * citem.Quantity)
 	};
 
-	private static async Task<IIdentWallet?> GetWallet(CustomerCommunicable commie)
+	private static async Task<IDbWallet?> GetWallet(CustomerCommunicable commie)
 	{
 		var res = await commie.TellInternalAsync(new EcoTellMessage(EcoTellMsgEnum.GetWallet));
 
-		return res.Code != 0 || res.Result is not IIdentWallet wallet ? null : wallet;
+		return res.Code != 0 || res.Result is not IDbWallet wallet ? null : wallet;
 	}
 
 	public async Task<bool> TryReserveOnCustomer(ICustomer customer, ICartItem details)
