@@ -1,7 +1,4 @@
-﻿using DisCatSharp.Entities;
-using DisCatSharp.EventArgs;
-
-using KaliskaHaven.DiscordClient;
+﻿using KaliskaHaven.DiscordClient;
 using KaliskaHaven.DiscordClient.SessionChannels;
 
 using Name.Bayfaderix.Darxxemiyur.Common;
@@ -20,7 +17,6 @@ namespace KaliskaHaven.Bot
 		{
 			_services = new();
 			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
-
 		}
 
 		public async Task RunRunnable(CancellationToken token = default)
@@ -37,8 +33,6 @@ namespace KaliskaHaven.Bot
 			var kali = await _services.GetKaliskaBot();
 
 			var ch = new BareMessageChannel(kali, 1083244585410637885, null);
-
-			
 		}
 
 		private static async Task Main(string[] args)

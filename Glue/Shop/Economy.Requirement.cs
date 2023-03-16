@@ -2,7 +2,6 @@
 using KaliskaHaven.Economy;
 using KaliskaHaven.Shop;
 
-
 namespace KaliskaHaven.Glue.Shop;
 
 public class EconomyRequirement : IRequirement

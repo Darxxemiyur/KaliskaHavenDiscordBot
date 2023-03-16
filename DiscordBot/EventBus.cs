@@ -4,10 +4,10 @@ using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.DiscordClient
 {
-    /// <summary>
-    /// Actions to take when marked as
-    /// </summary>
-    public enum EventBusInfo
+	/// <summary>
+	/// Actions to take when marked as
+	/// </summary>
+	public enum EventBusInfo
 	{
 		Pass,
 		Remove,
@@ -42,7 +42,6 @@ namespace KaliskaHaven.DiscordClient
 			_outSourcedReEnq = outSourcedReEnq;
 			_flags = EventBusInfo.Pass;
 		}
-
 
 		public async Task PassItem(TEvent item)
 		{
@@ -149,7 +148,6 @@ namespace KaliskaHaven.DiscordClient
 		}
 
 		~EventBus() => Dispose(disposing: false);
-
 
 		public void Dispose()
 		{

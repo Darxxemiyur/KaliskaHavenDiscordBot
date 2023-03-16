@@ -10,12 +10,15 @@ namespace KaliskaHaven.Database
 		public DbSet<ShopItem> ShopItems {
 			get; set;
 		}
+
 		public DbSet<DbCurrency> DbCurrencies {
 			get; set;
 		}
+
 		public DbSet<TransactionRecord> TransactionRecords {
 			get; set;
 		}
+
 		public DbSet<Wallet> Wallets {
 			get; set;
 		}

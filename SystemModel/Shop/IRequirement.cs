@@ -7,7 +7,7 @@ public interface IRequirement
 	}
 
 	/// <summary>
-	/// List of types the ICustomer is required to have.
+	/// List of types the ICustomer is required to have access to.
 	/// </summary>
 	IEnumerable<Type> RequiredTypes {
 		get;

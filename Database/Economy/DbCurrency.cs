@@ -8,12 +8,15 @@ namespace KaliskaHaven.Database.Economy
 	{
 		public IIdentity? Identity => throw new NotImplementedException();
 		public Currency? Identifyable => this;
+
 		public ulong ID {
 			get; set;
 		}
+
 		public Type Type {
 			get;
 		} = typeof(DbCurrency);
+
 		public DbCurrency()
 		{
 		}

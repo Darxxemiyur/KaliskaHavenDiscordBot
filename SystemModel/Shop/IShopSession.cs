@@ -11,36 +11,19 @@ public interface IShopSession
 		get;
 	}
 
-	IAsyncEnumerable<ICartItem> Cart {
+	ICollection<ICartItem> Cart {
 		get;
 	}
 
-	IAsyncEnumerable<IRequirement> Requirements {
+	ICollection<IRequirement> Requirements {
 		get;
 	}
 
-	IAsyncEnumerable<IPostResult> PostResults {
+	ICollection<IPostResult> PostResults {
 		get;
 	}
 
 	Task<ICartItem> AddToCard(IShopItem item);
 
 	Task<bool> RemoveFromCart(ICartItem item);
-}
-
-public interface ICartItem
-{
-	IShopSession Session {
-		get;
-	}
-
-	IShopItem ShopItem {
-		get;
-	}
-
-	decimal Quantity {
-		get;
-	}
-
-	Task Remove();
 }

@@ -36,7 +36,7 @@ public abstract class EconomyPostResult : IPostResult
 		Quantity = (long)Math.Round(Price.Quantity * citem.Quantity)
 	};
 
-	private static async Task<IDbWallet?> GetWallet(CustomerCommunicable commie)
+	private static async Task<IDbWallet?> GetWallet(IMessageCommunicable commie)
 	{
 		var res = await commie.TellInternalAsync(new EcoTellMessage(EcoTellMsgEnum.GetWallet));
 

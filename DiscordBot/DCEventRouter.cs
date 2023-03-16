@@ -77,6 +77,7 @@ namespace KaliskaHaven.DiscordClient
 		/// <param name="token"></param>
 		/// <returns></returns>
 		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, CancellationToken token = default) => _runner.PlaceRequest(predictator, ReEqn, OnSyncDeathCallback, token);
+
 		private Task ReEqn(IEnumerable<TEvent> queue) => _catcher.ReEnqueue(queue);
 
 		private Task OnSyncDeathCallback(FIFOFBACollection<TEvent> pouchToRecover) => _runner.OnSyncDeathCallback(pouchToRecover);

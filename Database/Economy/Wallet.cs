@@ -31,7 +31,6 @@ namespace KaliskaHaven.Database.Economy
 
 		public Wallet()
 		{
-
 		}
 
 		public Wallet(IIdentifiable<IWallet> wallet)

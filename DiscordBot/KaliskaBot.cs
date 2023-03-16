@@ -1,5 +1,4 @@
-﻿using DisCatSharp;
-using DisCatSharp.Common.Utilities;
+﻿using DisCatSharp.Common.Utilities;
 using DisCatSharp.Entities;
 using DisCatSharp.EventArgs;
 
@@ -10,7 +9,6 @@ using System.Reflection;
 
 namespace KaliskaHaven.DiscordClient
 {
-
 	public sealed class KaliskaBot : IAsyncRunnable, IKaliskaBot
 	{
 		private enum StartupSteps
@@ -19,6 +17,7 @@ namespace KaliskaHaven.DiscordClient
 			SetUp,
 			Ready,
 		}
+
 		private DisCatSharp.DiscordClient? _client;
 		private StartupSteps _steps;
 		private readonly IMyServices _service;

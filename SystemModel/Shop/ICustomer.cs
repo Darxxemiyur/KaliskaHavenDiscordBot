@@ -1,4 +1,6 @@
-﻿namespace KaliskaHaven.Shop;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
+
+namespace KaliskaHaven.Shop;
 
 public interface ICustomer
 {
@@ -16,5 +18,5 @@ public interface ICustomer
 	/// <summary>
 	/// </summary>
 	/// <returns></returns>
-	Task<CustomerCommunicable> GetCommunicator();
+	Task<IMessageCommunicable> GetCommunicator();
 }

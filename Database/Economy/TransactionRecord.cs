@@ -17,6 +17,7 @@ namespace KaliskaHaven.Database.Economy
 		public Wallet? From {
 			get; set;
 		}
+
 		public Wallet? To {
 			get; set;
 		}

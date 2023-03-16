@@ -2,11 +2,15 @@
 
 public interface IShopItem
 {
-	IEnumerable<IRequirement> PreRequestiments {
+	ICollection<IRequirement> PreRequestiments {
 		get;
 	}
 
-	IEnumerable<IPostResult> PostResults {
+	ICollection<IPostResult> PostResults {
+		get;
+	}
+
+	ICollection<IOptionInfo> Options {
 		get;
 	}
 }
