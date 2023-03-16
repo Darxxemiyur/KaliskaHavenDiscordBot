@@ -34,7 +34,7 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 		}
 		public TNewSessionChannel TransformAs<TNewSessionChannel>() where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
 		public bool TryTransformAs<TNewSessionChannel>(out TNewSessionChannel channel) where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
-		public Task<TellResult> TellInternal(TellMessage message) => throw new NotImplementedException();
+		public Task<TellResult> TellInternalAsync(TellMessage message) => throw new NotImplementedException();
 		public IAsyncEnumerable<TellResult> TellInternalProcedurally(TellMessage message) => throw new NotImplementedException();
 	}
 }

@@ -31,9 +31,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
-    <ProjectReference Include="..\DisUILangs\DisUILangs.csproj" />
     <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
     <ProjectReference Include="..\SystemModel\SystemModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Inventory\" />
+    <Folder Include="Economy\" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,13 @@
-﻿using Name.Bayfaderix.Darxxemiyur;
-using Name.Bayfaderix.Darxxemiyur.Common;
+﻿using Name.Bayfaderix.Darxxemiyur.Common;
 using Name.Bayfaderix.Darxxemiyur.Common.Extensions;
+using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.DiscordClient
 {
-	/// <summary>
-	/// Actions to take when marked as
-	/// </summary>
-	public enum EventBusInfo
+    /// <summary>
+    /// Actions to take when marked as
+    /// </summary>
+    public enum EventBusInfo
 	{
 		Pass,
 		Remove,

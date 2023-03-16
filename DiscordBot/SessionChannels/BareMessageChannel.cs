@@ -15,7 +15,7 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 	public class BareMessageChannel : ISessionChannel
 	{
 		private const string PLoad = "GetInfo";
-		private sealed record class Result(int Code, string? Note, object? Payload) : ITellResult
+		private sealed record class Result(int Code, string? Note, object? Result) : ITellResult
 		{
 			public static implicit operator TellResult(Result r) => new TellResult(r);
 		}
@@ -146,7 +146,7 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 				throw;
 			}
 		}
-		public async Task<TellResult> TellInternal(TellMessage message)
+		public async Task<TellResult> TellInternalAsync(TellMessage message)
 		{
 			if (message.IsNull || message.OriginalMessage is not Message || message.Note != PLoad)
 				return new TellResult();

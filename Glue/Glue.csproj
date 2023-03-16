@@ -9,13 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
-    <ProjectReference Include="..\Glue\Glue.csproj" />
-    <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
+    <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\SystemModel\SystemModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ShopUI\" />
+    <Folder Include="Economy\" />
+    <Folder Include="Inventory\" />
+    <Folder Include="Social\" />
+    <Folder Include="Shop\" />
   </ItemGroup>
+
 
 </Project>

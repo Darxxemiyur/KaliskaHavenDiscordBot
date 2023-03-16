@@ -1,6 +1,5 @@
-﻿namespace KaliskaHaven.SocialModel
+﻿namespace KaliskaHaven.SocialModel;
+
+internal class Permission
 {
-	internal class Permission
-	{
-	}
 }

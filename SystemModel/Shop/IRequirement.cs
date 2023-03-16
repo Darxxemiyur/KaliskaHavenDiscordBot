@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace KaliskaHaven.Shop;
 
-namespace KaliskaHaven.Shop
+public interface IRequirement
 {
-	public interface IRequirement
-	{
-		string RequirementType {
-			get;
-		}
+	string RequirementType {
+		get;
 	}
+
+	/// <summary>
+	/// List of types the ICustomer is required to have.
+	/// </summary>
+	IEnumerable<Type> RequiredTypes {
+		get;
+	}
+
+	/// <summary>
+	/// Accept customer visit.
+	/// </summary>
+	/// <param name="customer"></param>
+	/// <returns>True if customer meets requirements. False otherwise.</returns>
+	Task<bool> CustomerVisit(ICustomer customer);
 }

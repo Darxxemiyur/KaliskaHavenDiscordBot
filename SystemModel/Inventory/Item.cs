@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
-namespace KaliskaHaven.Inventory
+namespace KaliskaHaven.Inventory;
+
+public sealed class InventoryItem
 {
-	public sealed class InventoryItem
-	{
-		public string ItemType => ItemKindU?.RootElement.GetProperty(nameof(ItemType)).GetString() ?? throw new ArgumentNullException(nameof(ItemKindU),$"{nameof(ItemKindU)} was null!");
-		public JsonDocument? ItemKindU {
-			get; set;
-		}
-		public InventoryItem()
-		{
+	public string ItemType => ItemKindU?.RootElement.GetProperty(nameof(ItemType)).GetString() ?? throw new ArgumentNullException(nameof(ItemKindU), $"{nameof(ItemKindU)} was null!");
 
-		}
+	public JsonDocument? ItemKindU {
+		get; set;
+	}
+
+	public InventoryItem()
+	{
 	}
 }

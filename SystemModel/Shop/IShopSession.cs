@@ -1,30 +1,46 @@
-﻿using KaliskaHaven.Economy;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
 
-using Shop;
+namespace KaliskaHaven.Shop;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KaliskaHaven.Shop
+public interface IShopSession
 {
-	public interface IShopSession
-	{
-		public Task<IWallet> CustomerWallet {
-			get;
-		}
-		public IAsyncEnumerable<ICartItem> Cart {
-			get;
-		}
-		public Task<ICartItem> AddToCard(ShopItem item);
+	/// <summary>
+	/// Way to communicate with shop implementation.
+	/// </summary>
+	IMessageCommunicable Communicable {
+		get;
 	}
-	public interface ICartItem
-	{
-		ShopItem ShopItem {
-			get;
-		}
-		Task Remove();
+
+	IAsyncEnumerable<ICartItem> Cart {
+		get;
 	}
+
+	IAsyncEnumerable<IRequirement> Requirements {
+		get;
+	}
+
+	IAsyncEnumerable<IPostResult> PostResults {
+		get;
+	}
+
+	Task<ICartItem> AddToCard(IShopItem item);
+
+	Task<bool> RemoveFromCart(ICartItem item);
+}
+
+public interface ICartItem
+{
+	IShopSession Session {
+		get;
+	}
+
+	IShopItem ShopItem {
+		get;
+	}
+
+	decimal Quantity {
+		get;
+	}
+
+	Task Remove();
 }
