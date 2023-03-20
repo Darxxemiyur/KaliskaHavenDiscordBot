@@ -11,7 +11,15 @@ public sealed class Person : IUser
 		get; set;
 	}
 
-	public Wallet Wallet {
+	public Wallet? Wallet {
+		get; set;
+	}
+
+	public long WalletID {
+		get; set;
+	}
+
+	public ulong DiscordId {
 		get; set;
 	}
 

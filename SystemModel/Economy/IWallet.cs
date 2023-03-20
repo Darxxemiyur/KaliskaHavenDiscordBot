@@ -28,5 +28,5 @@ public interface IWallet
 	/// Get Wallet's currencies.
 	/// </summary>
 	/// <returns></returns>
-	IAsyncEnumerable<Currency> GetAll();
+	IAsyncEnumerable<Currency> GetAllCurrencies(); 
 }

@@ -1,7 +1,11 @@
-﻿using KaliskaHaven.Database;
+﻿using DisCatSharp.Entities;
+
+using KaliskaHaven.Database;
 using KaliskaHaven.Database.Economy;
 using KaliskaHaven.Database.Entities;
 using KaliskaHaven.Economy;
+
+using Microsoft.EntityFrameworkCore;
 
 using Name.Bayfaderix.Darxxemiyur.General;
 
@@ -9,6 +13,46 @@ namespace KaliskaHaven.Glue.Economy
 {
 	public sealed class Wallet : IDbWallet
 	{
+		public static async Task<(Person, Wallet)> EnsureCreated(KaliskaDB db, DiscordUser user)
+		{
+			var person = await db.Persons.FirstOrDefaultAsync(x => x.DiscordId == user.Id);
+			if (person == null)
+			{
+				person = new Person {
+					DiscordId = user.Id,
+				};
+
+				await using var tr = await db.Database.BeginTransactionAsync();
+				await db.Persons.AddAsync(person);
+				await db.SaveChangesAsync();
+				await tr.CommitAsync();
+			}
+			var wallet = await EnsureCreated(db, person);
+
+			return (person, wallet);
+		}
+		public static async Task<Wallet> EnsureCreated(KaliskaDB db, Person person)
+		{
+			var walletT = await db.Wallets.FirstOrDefaultAsync(x => x.Owner == person);
+
+			await using var tr = await db.Database.BeginTransactionAsync();
+			if (walletT != null)
+			{
+				await tr.CommitAsync();
+				return new Wallet(db, walletT);
+			}
+
+			var wallet = new Database.Economy.Wallet {
+				Owner = person
+			};
+			await db.Wallets.AddAsync(wallet);
+			await db.SaveChangesAsync();
+
+			await tr.CommitAsync();
+
+			return new Wallet(db, wallet);
+		}
+
 		private readonly KaliskaDB _db;
 		private readonly Database.Economy.Wallet _wallet;
 
@@ -54,10 +98,10 @@ namespace KaliskaHaven.Glue.Economy
 			return await _wallet.Get(currency);
 		}
 
-		public async IAsyncEnumerable<Currency> GetAll()
+		public async IAsyncEnumerable<Currency> GetAllCurrencies()
 		{
 			await this.EnsureFullyLoaded();
-			await foreach (var curr in _wallet.GetAll())
+			await foreach (var curr in _wallet.GetAllCurrencies())
 				yield return curr;
 		}
 

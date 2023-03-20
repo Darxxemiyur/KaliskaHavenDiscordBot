@@ -2,13 +2,13 @@
 
 public interface IInventory
 {
-	IAsyncEnumerable<InventoryItem> Items {
+	IAsyncEnumerable<IItem> Items {
 		get;
 	}
 
-	Task RemoveItem(InventoryItem item);
+	Task RemoveItem(IItem item);
 
-	Task InsertItem(InventoryItem item);
+	Task InsertItem(IItem item);
 
-	Task UpdateItem(InventoryItem item);
+	Task UpdateItem(IItem item);
 }

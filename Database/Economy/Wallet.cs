@@ -16,7 +16,11 @@ namespace KaliskaHaven.Database.Economy
 			get; set;
 		}
 
-		public Person Owner {
+		public Person? Owner {
+			get; set;
+		}
+
+		public long OwnerID {
 			get; set;
 		}
 
@@ -67,7 +71,7 @@ namespace KaliskaHaven.Database.Economy
 			return DbCurrencies.FirstOrDefault(x => x.CurrencyType == currency) as Currency;
 		});
 
-		public async IAsyncEnumerable<Currency> GetAll()
+		public async IAsyncEnumerable<Currency> GetAllCurrencies()
 		{
 			if (DbCurrencies == null)
 				throw new InvalidOperationException();

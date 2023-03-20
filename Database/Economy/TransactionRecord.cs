@@ -22,13 +22,9 @@ namespace KaliskaHaven.Database.Economy
 			get; set;
 		}
 
-		IIdentifiable<IWallet>? ITransactionLog.From {
-			get;
-		}
+		IIdentifiable<IWallet>? ITransactionLog.From => From;
 
-		IIdentifiable<IWallet>? ITransactionLog.To {
-			get;
-		}
+		IIdentifiable<IWallet>? ITransactionLog.To => To;
 
 		public DbCurrency? Withdrawn {
 			get; set;
@@ -45,6 +41,9 @@ namespace KaliskaHaven.Database.Economy
 		public IIdentity? Identity => throw new NotImplementedException();
 		public ITransactionLog? Identifyable => this;
 
+		public TransactionRecord()
+		{
+		}
 		public TransactionRecord(ITransactionLog log)
 		{
 			Kind = log.Kind;

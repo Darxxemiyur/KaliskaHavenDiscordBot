@@ -77,22 +77,21 @@ namespace KaliskaHaven.DiscordClient
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public async Task<bool> CompareItem(TEvent item)
+		public async Task<bool> CompareItem(TEvent? item)
 		{
 			await using var _ = await _lock.BlockAsyncLock();
 
 			var isNotIgnored = true;
-			var node = _ignore.First;
+			var next = _ignore.First;
 
-			while (node != null)
+			while (next != null && item != null)
 			{
-				var next = node.Next;
-				if (!node.Value.TryGetTarget(out var ignore))
-					_ignore.Remove(node);
-
-				isNotIgnored &= ignore != item;
-
-				node = next;
+				var curr = next;
+				next = next.Next;
+				if (curr.Value.TryGetTarget(out var ignore))
+					isNotIgnored &= ignore != item;
+				else
+					_ignore.Remove(curr);
 			}
 
 			return isNotIgnored && item != null && _flags == EventBusInfo.Pass && await _predictator(item);
