@@ -5,7 +5,10 @@
 /// </summary>
 public enum CurrencyType
 {
-	Money
+	Money,
+	Drugs,
+	Gold,
+	Silver,
 }
 
 /// <summary>

@@ -1,8 +1,11 @@
 ﻿using DisCatSharp.EventArgs;
 
+using KaliskaHaven.Database;
 using KaliskaHaven.DiscordClient;
 using KaliskaHaven.DiscordClient.SessionChannels;
 using KaliskaHaven.DiscordUI.EconomyUI;
+
+using Microsoft.EntityFrameworkCore;
 
 using Name.Bayfaderix.Darxxemiyur.Common;
 using Name.Bayfaderix.Darxxemiyur.Common.Async;
@@ -47,6 +50,11 @@ namespace KaliskaHaven.Bot
 			var p = await (await bot.GetClient()).GetUserAsync(860897395109789706);
 
 			var net = new Balance(ch, p) as INodeNetwork;
+
+			await using (var db = new KaliskaDB())
+			{
+				await db.Database.MigrateAsync();
+			}
 
 			await net.RunNetwork();
 		}

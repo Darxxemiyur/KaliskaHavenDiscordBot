@@ -12,6 +12,7 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 	{
 		private readonly BareMessageChannel _ch;
 		private readonly DiscordUser _user;
+
 		public Balance(BareMessageChannel channel, DiscordUser user)
 		{
 			_user = user;
@@ -22,18 +23,19 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 
 		private async Task<StepInfo?> EntryMenu(StepInfo? prev)
 		{
-			
 			await using var context = new KaliskaDB();
 			var embs = new DiscordEmbedBuilder();
 
 			var (person, wallet) = await Wallet.EnsureCreated(context, _user);
 
+			await wallet.EnsureFullyLoaded();
 
 			embs.AddField("Balance:", GetCurrencyList(wallet.DbCurrencies));
 			await _ch.SendMessage(embs);
 
 			return null;
 		}
-		private string GetCurrencyList(IEnumerable<Database.Economy.DbCurrency> currs) => string.Join("\n", currs.Select(x => $"{x.CurrencyType} - {x.Quantity}"));
+
+		private string GetCurrencyList(IEnumerable<Database.Economy.DbCurrency> currs) => string.Join("\n", currs.Select(x => $"{x.CurrencyType} - {x.Quantity}") is var fs && fs.Any() ? fs : new string[] { "No currencies." });
 	}
 }

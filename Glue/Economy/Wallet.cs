@@ -27,10 +27,12 @@ namespace KaliskaHaven.Glue.Economy
 				await db.SaveChangesAsync();
 				await tr.CommitAsync();
 			}
+
 			var wallet = await EnsureCreated(db, person);
 
 			return (person, wallet);
 		}
+
 		public static async Task<Wallet> EnsureCreated(KaliskaDB db, Person person)
 		{
 			var walletT = await db.Wallets.FirstOrDefaultAsync(x => x.Owner == person);
@@ -42,9 +44,10 @@ namespace KaliskaHaven.Glue.Economy
 				return new Wallet(db, walletT);
 			}
 
-			var wallet = new Database.Economy.Wallet {
-				Owner = person
-			};
+			var wallet = new Database.Economy.Wallet();
+			person.Wallet = wallet;
+			wallet.Owner = person;
+
 			await db.Wallets.AddAsync(wallet);
 			await db.SaveChangesAsync();
 
@@ -62,7 +65,7 @@ namespace KaliskaHaven.Glue.Economy
 			_wallet = wallet;
 		}
 
-		public ulong ID => _wallet.ID;
+		public long ID => _wallet.ID;
 
 		public ICollection<DbCurrency> DbCurrencies => _wallet.DbCurrencies;
 

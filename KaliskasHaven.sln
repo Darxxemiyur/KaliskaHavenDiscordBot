@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemModel", "SystemModel\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glue", "Glue\Glue.csproj", "{029486C6-F09A-4971-A150-D08412CD2847}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTest", "DatabaseTest\DatabaseTest.csproj", "{870CCD3E-43D6-47CD-9913-FDDBDAF0C288}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{029486C6-F09A-4971-A150-D08412CD2847}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{029486C6-F09A-4971-A150-D08412CD2847}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{029486C6-F09A-4971-A150-D08412CD2847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{870CCD3E-43D6-47CD-9913-FDDBDAF0C288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{870CCD3E-43D6-47CD-9913-FDDBDAF0C288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{870CCD3E-43D6-47CD-9913-FDDBDAF0C288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{870CCD3E-43D6-47CD-9913-FDDBDAF0C288}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{3771D5A6-2BC1-414D-8A8F-181BBCBCB39C} = {F56120C0-020E-4FBF-949B-6DEDF9229B53}
 		{BB2C9F27-5368-4CDA-9418-379E524F9D31} = {B518D59E-56DA-4A54-984E-672C69477E5B}
 		{029486C6-F09A-4971-A150-D08412CD2847} = {B518D59E-56DA-4A54-984E-672C69477E5B}
+		{870CCD3E-43D6-47CD-9913-FDDBDAF0C288} = {F56120C0-020E-4FBF-949B-6DEDF9229B53}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D1D36BA-FD86-4C21-851D-C55F8950DD77}
