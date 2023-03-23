@@ -6,7 +6,7 @@ namespace KaliskaHaven.Database.Economy
 {
 	public sealed class TransactionRecord : ITransactionLog, IIdentifiable<ITransactionLog>
 	{
-		public ulong ID {
+		public long ID {
 			get; set;
 		}
 
@@ -44,6 +44,7 @@ namespace KaliskaHaven.Database.Economy
 		public TransactionRecord()
 		{
 		}
+
 		public TransactionRecord(ITransactionLog log)
 		{
 			Kind = log.Kind;

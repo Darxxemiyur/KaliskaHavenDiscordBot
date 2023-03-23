@@ -7,15 +7,11 @@ namespace KaliskaHaven.Database.Entities;
 
 public sealed class Person : IUser
 {
-	public ulong ID {
+	public long ID {
 		get; set;
 	}
 
 	public Wallet? Wallet {
-		get; set;
-	}
-
-	public long WalletID {
 		get; set;
 	}
 

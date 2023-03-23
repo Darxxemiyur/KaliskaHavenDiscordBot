@@ -7,7 +7,7 @@ namespace KaliskaHaven.Database.Economy
 {
 	public interface IDbWallet : IWallet, IIdentifiable<IWallet>
 	{
-		public ulong ID {
+		public long ID {
 			get;
 		}
 

@@ -9,7 +9,7 @@ namespace KaliskaHaven.Database.Economy
 		public IIdentity? Identity => throw new NotImplementedException();
 		public Currency? Identifyable => this;
 
-		public ulong ID {
+		public long ID {
 			get; set;
 		}
 

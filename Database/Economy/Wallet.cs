@@ -8,7 +8,7 @@ namespace KaliskaHaven.Database.Economy
 {
 	public sealed class Wallet : IDbWallet
 	{
-		public ulong ID {
+		public long ID {
 			get; set;
 		}
 
@@ -20,7 +20,7 @@ namespace KaliskaHaven.Database.Economy
 			get; set;
 		}
 
-		public long OwnerID {
+		public long? OwnerID {
 			get; set;
 		}
 
