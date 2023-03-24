@@ -214,73 +214,94 @@ namespace KaliskaHaven.DiscordClient
 
 		public static implicit operator UniversalMessageBuilder(DiscordInteractionResponseBuilder msg) => new(msg);
 
+
 		public static implicit operator DiscordWebhookBuilder(UniversalMessageBuilder umb)
 		{
 			var dwb = new DiscordWebhookBuilder();
-
-			if (umb._components != null)
-				foreach (var row in umb._components)
-					dwb.AddComponents(row);
-
-			if (umb._embeds != null)
-				dwb.AddEmbeds(umb._embeds.Select(x => x.Build()));
-
-			if (umb._content != null)
-				dwb.WithContent(umb._content);
-
-			if (umb._files != null)
-				dwb.AddFiles(umb._files);
-
-			if (umb._mentions != null)
-				dwb.AddMentions(umb._mentions);
+			umb.CopyTo(dwb);
 
 			return dwb;
+		}
+
+		public UniversalMessageBuilder CopyTo(DiscordWebhookBuilder to)
+		{
+			if (_components != null)
+				foreach (var row in _components)
+					to.AddComponents(row);
+
+			if (_embeds != null)
+				to.AddEmbeds(_embeds.Select(x => x.Build()));
+
+			if (_content != null)
+				to.WithContent(_content);
+
+			if (_files != null)
+				to.AddFiles(_files);
+
+			if (_mentions != null)
+				to.AddMentions(_mentions);
+
+			return this;
 		}
 
 		public static implicit operator DiscordMessageBuilder(UniversalMessageBuilder umb)
 		{
 			var dmb = new DiscordMessageBuilder();
 
-			if (umb._components != null)
-				foreach (var row in umb._components)
-					dmb.AddComponents(row);
-
-			if (umb._embeds != null)
-				dmb.AddEmbeds(umb._embeds.Select(x => x.Build()));
-
-			if (umb._content != null)
-				dmb.WithContent(umb._content);
-
-			if (umb._files != null)
-				dmb.WithFiles(umb._files);
-
-			if (umb._mentions != null)
-				dmb.WithAllowedMentions(umb._mentions);
+			umb.CopyTo(dmb);
 
 			return dmb;
+		}
+
+		public UniversalMessageBuilder CopyTo(DiscordMessageBuilder to)
+		{
+			if (_components != null)
+				foreach (var row in _components)
+					to.AddComponents(row);
+
+			if (_embeds != null)
+				to.AddEmbeds(_embeds.Select(x => x.Build()));
+
+			if (_content != null)
+				to.WithContent(_content);
+
+			if (_files != null)
+				to.WithFiles(_files);
+
+			if (_mentions != null)
+				to.WithAllowedMentions(_mentions);
+
+			return this;
 		}
 
 		public static implicit operator DiscordInteractionResponseBuilder(UniversalMessageBuilder umb)
 		{
 			var dirb = new DiscordInteractionResponseBuilder();
 
-			if (umb._components != null)
-				foreach (var row in umb._components)
-					dirb.AddComponents(row);
-
-			if (umb._embeds != null)
-				dirb.AddEmbeds(umb._embeds.Select(x => x.Build()));
-
-			if (umb._content != null)
-				dirb.WithContent(umb._content);
-
-			if (umb._files != null)
-				dirb.AddFiles(umb._files);
-
-			if (umb._mentions != null)
-				dirb.AddMentions(umb._mentions);
+			umb.CopyTo(dirb);
 
 			return dirb;
+		}
+
+		public UniversalMessageBuilder CopyTo(DiscordInteractionResponseBuilder to)
+		{
+			if (_components != null)
+				foreach (var row in _components)
+					to.AddComponents(row);
+
+			if (_embeds != null)
+				to.AddEmbeds(_embeds.Select(x => x.Build()));
+
+			if (_content != null)
+				to.WithContent(_content);
+
+			if (_files != null)
+				to.AddFiles(_files);
+
+			if (_mentions != null)
+				to.AddMentions(_mentions);
+
+			return this;
 		}
 	}
 }

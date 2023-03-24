@@ -5,10 +5,11 @@
 /// </summary>
 public enum CurrencyType
 {
-	Money,
-	Drugs,
-	Gold,
-	Silver,
+	Kelpie_Cash,
+	Spring_Cash,
+	Autumn_Cash,
+	Summer_Cash,
+	Winter_Cash
 }
 
 /// <summary>

@@ -126,7 +126,7 @@ namespace KaliskaHaven.DiscordClient
 			if (_flags == EventBusInfo.Pass)
 				_flags = EventBusInfo.Remove;
 
-			_onFinalize?.Delegate?.Invoke();
+			_onFinalize?.Call();
 			await _outSourcedReEnq(_pouch);
 		}
 
@@ -139,7 +139,7 @@ namespace KaliskaHaven.DiscordClient
 
 			if (_flags != EventBusInfo.Remove)
 			{
-				_onFinalize?.Delegate?.Invoke();
+				_onFinalize?.Call();
 				_ = MyTaskExtensions.RunOnScheduler(() => _outSourcedReEnq(_pouch));
 			}
 

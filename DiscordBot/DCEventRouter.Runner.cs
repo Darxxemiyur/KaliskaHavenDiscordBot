@@ -139,7 +139,7 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 			var del = new ExternalOnFinalization();
 			var thingy = new EventBus<TEvent>(predictator, reEnq, onDeath, del, token);
 			var node = _eventReceivers.AddLast(new WeakReference<EventBus<TEvent>>(thingy));
-			del.Delegate = () => _eventReceivers.Remove(node);
+			del.Actions.AddLast(() => _eventReceivers.Remove(node));
 			return thingy;
 		}
 	}

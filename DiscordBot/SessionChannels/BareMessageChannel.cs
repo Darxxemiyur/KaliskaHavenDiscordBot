@@ -78,8 +78,6 @@ public class BareMessageChannel : ISessionChannel
 	public async Task<EventBus<TEvent>> GetSessionRelatedEvents<TEvent>() where TEvent : class
 	{
 		await using var __ = await _lock.BlockAsyncLock();
-		if (_messageId == null)
-			throw new ArgumentNullException();
 
 #pragma warning disable CS8603 // Possible null reference return.
 		if (typeof(TEvent).IsEquivalentTo(typeof(MessageCreateEventArgs)))
@@ -87,7 +85,7 @@ public class BareMessageChannel : ISessionChannel
 			var router = await _kaliska.GetEventRouter<MessageCreateEventArgs>();
 
 			return (await router.PlaceRequest(x => {
-				if (_messageId != null && x.Message?.ReferencedMessage?.Id == _messageId)
+				if (x.Message?.ChannelId == _channelId)
 					return true;
 				return false;
 			})) as EventBus<TEvent>;
@@ -145,7 +143,10 @@ public class BareMessageChannel : ISessionChannel
 			else
 			{
 				var message = await channel.GetMessageAsync(_messageId.Value);
-				await message.ModifyAsync(content);
+				await message.ModifyAsync(x => {
+					x.Clear();
+					content.CopyTo(x);
+				});
 			}
 		}
 		catch (NotFoundException)

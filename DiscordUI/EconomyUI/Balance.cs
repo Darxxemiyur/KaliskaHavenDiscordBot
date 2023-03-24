@@ -1,6 +1,8 @@
 ﻿using DisCatSharp.Entities;
+using DisCatSharp.EventArgs;
 
 using KaliskaHaven.Database;
+using KaliskaHaven.DiscordClient;
 using KaliskaHaven.DiscordClient.SessionChannels;
 using KaliskaHaven.Glue.Economy;
 
@@ -24,14 +26,27 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 		private async Task<StepInfo?> EntryMenu(StepInfo? prev)
 		{
 			await using var context = new KaliskaDB();
-			var embs = new DiscordEmbedBuilder();
+			var msg = new UniversalMessageBuilder();
 
 			var (person, wallet) = await Wallet.EnsureCreated(context, _user);
 
 			await wallet.EnsureFullyLoaded();
+			var usr = await _user.GetFromApiAsync();
 
-			embs.AddField("Balance:", GetCurrencyList(wallet.DbCurrencies));
-			await _ch.SendMessage(embs);
+			var userAvatar = usr.GetAvatarUrl(DisCatSharp.ImageFormat.Auto);
+			using var wla = await Wallet.GetWalletImage(wallet, this.GetCurrencyList(wallet.DbCurrencies), usr.UsernameWithDiscriminator, userAvatar);
+			var ses = await _ch.GetSessionRelatedEvents<MessageCreateEventArgs>();
+			var getter = ses.GetItem();
+			var fname = string.Join('.', "Avatar", userAvatar.Split('.').LastOrDefault()?.Split('?').FirstOrDefault());
+			await _ch.SendMessage(new UniversalMessageBuilder().SetFile(fname, wla));
+			var imgUrl = (await getter).Message.Attachments.First().ProxyUrl;
+
+			msg.AddEmbeds(new DiscordEmbedBuilder().WithThumbnail(userAvatar)
+				.WithImageUrl(imgUrl).WithColor(new DiscordColor(210, 190, 30))
+				.AddField(new DiscordEmbedField("User:", $"<@{person.DiscordId}>"))
+				.AddField(new DiscordEmbedField("Balance:", this.GetCurrencyList(wallet.DbCurrencies))));
+
+			await _ch.SendMessage(msg);
 
 			return null;
 		}

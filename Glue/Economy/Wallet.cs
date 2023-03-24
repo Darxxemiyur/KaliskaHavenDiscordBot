@@ -7,7 +7,15 @@ using KaliskaHaven.Economy;
 
 using Microsoft.EntityFrameworkCore;
 
+using Name.Bayfaderix.Darxxemiyur.Common;
 using Name.Bayfaderix.Darxxemiyur.General;
+
+using SixLabors.ImageSharp;
+
+using System.Text.RegularExpressions;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace KaliskaHaven.Glue.Economy
 {
@@ -54,6 +62,40 @@ namespace KaliskaHaven.Glue.Economy
 			await tr.CommitAsync();
 
 			return new Wallet(db, wallet);
+		}
+
+		public static async Task<Stream> GetWalletImage(Wallet wallet, string currencies, string username, string userUrl)
+		{
+			var hc = new HttpClient();
+			var iconImgH = await hc.GetAsync(userUrl);
+			var iconImg = await iconImgH.Content.ReadAsStreamAsync();
+
+			using var memii = new MemoryStream();
+			await iconImg.CopyToAsync(memii);
+			memii.Seek(0, SeekOrigin.Begin);
+
+			using var icoImg = await Image.LoadAsync(memii);
+			using var img = new Image<Rgba32>(500, 700);
+
+			await Task.Run(() => {
+				icoImg.Mutate(x => {
+					var s = new Size(120, 120);
+					x.Resize(s);
+
+				});
+				img.Mutate(x => {
+					using var bg = new Image<Rgba32>(img.Size.Width, img.Size.Height);
+					bg.Mutate(y => y.BackgroundColor(new Color(new Rgba32(255 / 2, 255 / 2, 255 / 2))));
+					x.DrawImage(bg, new Point(0, 0), .5f);
+					x.DrawImage(icoImg, new Point(500 - 120, 0), 1f);
+				});
+
+			});
+
+			var ms = new MemoryStream();
+			await img.SaveAsPngAsync(ms);
+			ms.Seek(0, SeekOrigin.Begin);
+			return ms;
 		}
 
 		private readonly KaliskaDB _db;
