@@ -214,7 +214,6 @@ namespace KaliskaHaven.DiscordClient
 
 		public static implicit operator UniversalMessageBuilder(DiscordInteractionResponseBuilder msg) => new(msg);
 
-
 		public static implicit operator DiscordWebhookBuilder(UniversalMessageBuilder umb)
 		{
 			var dwb = new DiscordWebhookBuilder();
