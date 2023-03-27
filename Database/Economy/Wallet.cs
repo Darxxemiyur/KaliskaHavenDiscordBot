@@ -1,7 +1,7 @@
 ﻿using KaliskaHaven.Database.Entities;
 using KaliskaHaven.Economy;
 
-using Name.Bayfaderix.Darxxemiyur.Common.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Extensions;
 using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Database.Economy

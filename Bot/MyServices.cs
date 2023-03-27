@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-using Name.Bayfaderix.Darxxemiyur.Common;
-using Name.Bayfaderix.Darxxemiyur.Common.Async;
-using Name.Bayfaderix.Darxxemiyur.Common.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Async;
+using Name.Bayfaderix.Darxxemiyur.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Tasks;
 
 using System.Reflection;
 

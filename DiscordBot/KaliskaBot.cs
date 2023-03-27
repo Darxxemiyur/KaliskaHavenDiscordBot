@@ -2,8 +2,8 @@
 using DisCatSharp.Entities;
 using DisCatSharp.EventArgs;
 
-using Name.Bayfaderix.Darxxemiyur.Common;
-using Name.Bayfaderix.Darxxemiyur.Common.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Tasks;
 
 using System.Reflection;
 
