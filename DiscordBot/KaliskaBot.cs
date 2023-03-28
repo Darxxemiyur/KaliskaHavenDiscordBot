@@ -101,7 +101,7 @@ namespace KaliskaHaven.DiscordClient
 		{
 			ThrowIfNotReady();
 
-			await using var __ = await _lock.BlockAsyncLock();
+			await using var ___ = await _lock.ScopeAsyncLock();
 
 			var etype = typeof(TEvent);
 			if (_eventRouter?.TryGetValue(etype, out var @ref) == true)

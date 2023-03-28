@@ -8,7 +8,7 @@ using Name.Bayfaderix.Darxxemiyur.Tasks;
 
 namespace KaliskaHaven.DiscordClient
 {
-	public sealed partial class DCEventRouter<TClient, TEvent> : IAsyncRunnable where TClient : BaseDiscordClient where TEvent : DiscordEventArgs
+	public sealed partial class DCEventRouter<TClient, TEvent> : IAsyncRunnable, IEventBusSource<TEvent> where TClient : BaseDiscordClient where TEvent : DiscordEventArgs
 	{
 		private readonly Runner _runner;
 
@@ -55,7 +55,7 @@ namespace KaliskaHaven.DiscordClient
 			_pendingChildren = new(true);
 			var pouch = new FIFOPTACollection<TEvent>();
 			_tScheduler = parent._tScheduler;
-			var catcher = new MyEventBusCatcher(bus, pouch, parent);
+			var catcher = new MyEventBusCatcher(bus, pouch);
 			_runner = new(parent._runner.KeepAliveReference, catcher, pouch, _tScheduler, _pendingChildren);
 			_catcher = catcher;
 			_runner.OnNonFiltered += catcher.ReturnEvent;
@@ -77,12 +77,14 @@ namespace KaliskaHaven.DiscordClient
 		/// <param name="predictator"></param>
 		/// <param name="token"></param>
 		/// <returns></returns>
-		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, CancellationToken token = default) => _runner.PlaceRequest(predictator, ReEqn, OnSyncDeathCallback, token);
+		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, CancellationToken token = default) => _runner.PlaceRequest(predictator, this, token);
 
-		private Task ReEqn(IEnumerable<TEvent> queue) => _catcher.ReEnqueue(queue);
-
-		private Task OnSyncDeathCallback(FIFOFBACollection<TEvent> pouchToRecover) => _runner.OnSyncDeathCallback(pouchToRecover);
+		// Do not modify. It keeps reference to the router, making it not GC collecteable to prevent deadlocks!
 
 		public Task RunRunnable(CancellationToken token = default) => ((IAsyncRunnable)_runner).RunRunnable(token);
+
+		Task IEventBusSource<TEvent>.ReEnqueue(IEnumerable<TEvent> events) => _catcher.ReEnqueue(events);
+
+		Task IEventBusSource<TEvent>.OutsourceReEnqueue(FIFOFBACollection<TEvent> pouch) => _runner.OnSyncDeathCallback(pouch);
 	}
 }

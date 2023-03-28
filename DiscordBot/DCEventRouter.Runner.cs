@@ -11,7 +11,6 @@ namespace KaliskaHaven.DiscordClient;
 
 public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseDiscordClient where TEvent : DiscordEventArgs
 {
-	// TODO: THE ROUTERS MUST BE GC COLLECTABLE. AND THEIR DESCENDANTS TOO.
 	private sealed class Runner : IAsyncRunnable
 	{
 		private readonly IEventCatcher _catcher;
@@ -30,6 +29,7 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 
 		private readonly TaskScheduler _tScheduler;
 		private readonly CancellationTokenSource _graceCancelSource = new();
+		private readonly LinkedList<FIFOFBACollection<TEvent>> _pouches;
 
 		public Runner(TClient client, IEventCatcher catcher, FIFOPTACollection<TEvent> pouch, TaskScheduler scheduler, FIFOFBACollection<IAsyncRunnable> childrenPouch)
 		{
@@ -39,6 +39,7 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 			_catcher = catcher;
 			KeepAliveReference = client;
 			_eventReceivers = new();
+			_pouches = new();
 			_lock = new();
 		}
 
@@ -74,11 +75,10 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 					await Task.WhenAll(eventLoop, childrenStart);
 					break;
 				}
+				await completed; //Await it to get exceptions if any.
 
-				if (eventLoop == completed)
-					eventLoop = null;
-				if (childrenStart == completed)
-					childrenStart = null;
+				eventLoop = eventLoop == completed ? null : eventLoop;
+				childrenStart = childrenStart == completed ? null : childrenStart;
 			}
 		}
 
@@ -109,7 +109,7 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 
 		private async Task<bool> PassToReceivers(TEvent anEvent)
 		{
-			await using var _ = await _lock.BlockAsyncLock();
+			await using var __ = await _lock.ScopeAsyncLock();
 
 			var isPassed = false;
 			var receiverNode = _eventReceivers.First;
@@ -117,31 +117,33 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 			{
 				var currNode = receiverNode;
 				receiverNode = receiverNode.Next;
-				if (currNode.Value.TryGetTarget(out var receiver))
-				{
-					if (await receiver.GetInfo() == EventBusInfo.Pass && await receiver.CompareItem(anEvent) && !isPassed && (isPassed = true))
-						await receiver.PassItem(anEvent);
-
-					if (await receiver.GetInfo() == EventBusInfo.Remove)
-						_eventReceivers.Remove(currNode);
-				}
-				else
+				if (!currNode.Value.TryGetTarget(out var receiver))
 				{
 					_eventReceivers.Remove(currNode);
+					continue;
 				}
+
+				if (await receiver.GetInfo() == EventBusInfo.Pass && await receiver.CompareItem(anEvent) && !isPassed && (isPassed = true))
+					await receiver.PassItem(anEvent);
+
+				if (await receiver.GetInfo() == EventBusInfo.Remove)
+					_eventReceivers.Remove(currNode);
 			}
 
 			return isPassed;
 		}
-
-		public async Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, Func<IEnumerable<TEvent>, Task> reEnq, Func<FIFOFBACollection<TEvent>, Task> onDeath, CancellationToken token = default)
+		public async Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, IEventBusSource<TEvent> requeuer, CancellationToken token = default)
 		{
-			await using var _ = await _lock.BlockAsyncLock();
-			var del = new ExternalOnFinalization();
-			var thingy = new EventBus<TEvent>(predictator, reEnq, onDeath, del, token);
-			var node = _eventReceivers.AddLast(new WeakReference<EventBus<TEvent>>(thingy));
-			del.Actions.AddLast(() => _eventReceivers.Remove(node));
-			return thingy;
+			await using var __ = await _lock.ScopeAsyncLock();
+			var onFinalization = new ExternalOnFinalization();
+			var eventPouchNode = _pouches.AddLast(new FIFOFBACollection<TEvent>());
+			var requestFuckBus = new EventBus<TEvent>(predictator, requeuer, eventPouchNode.Value, onFinalization, token);
+			var eventBusNode = _eventReceivers.AddLast(new WeakReference<EventBus<TEvent>>(requestFuckBus));
+			onFinalization.Actions.AddLast(() => _eventReceivers.Remove(eventBusNode));
+			onFinalization.Actions.AddLast(() => MyTaskExtensions.RunOnScheduler(() => requeuer.OutsourceReEnqueue(eventPouchNode.Value)));
+			onFinalization.Actions.AddLast(() => _pouches.Remove(eventPouchNode));
+
+			return requestFuckBus;
 		}
 	}
 }

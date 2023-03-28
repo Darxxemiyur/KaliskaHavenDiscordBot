@@ -21,7 +21,7 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 			_ch = channel;
 		}
 
-		public StepInfo GetStartingInstruction() => new(EntryMenu);
+		public StepInfo GetStartingInstruction() => new(this.EntryMenu);
 
 		private async Task<StepInfo?> EntryMenu(StepInfo? prev)
 		{
@@ -40,12 +40,10 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 			var fname = string.Join('.', "Avatar", userAvatar.Split('.').LastOrDefault()?.Split('?').FirstOrDefault());
 			await _ch.SendMessage(new UniversalMessageBuilder().SetFile(fname, wla));
 			var imgUrl = (await getter).Message.Attachments.First().ProxyUrl;
-
 			msg.AddEmbeds(new DiscordEmbedBuilder().WithThumbnail(userAvatar)
 				.WithImageUrl(imgUrl).WithColor(new DiscordColor(210, 190, 30))
 				.AddField(new DiscordEmbedField("User:", $"<@{person.DiscordId}>"))
 				.AddField(new DiscordEmbedField("Balance:", this.GetCurrencyList(wallet.DbCurrencies))));
-
 			await _ch.SendMessage(msg);
 
 			return null;

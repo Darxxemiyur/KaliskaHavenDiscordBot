@@ -24,17 +24,11 @@ namespace KaliskaHaven.DiscordClient
 			private readonly FIFOPTACollection<TEvent> _pouch;
 			private readonly EventBus<TEvent> _bus;
 			private readonly CancellationTokenSource _source;
-#pragma warning disable IDE0052 // Remove unread private members
-#pragma warning disable S4487 // Unread "private" fields should be removed
-			private readonly DCEventRouter<TClient, TEvent> _keepAlive; // Because bus catcher needs to keep reference to the parent router, as to preserve router class structure and use polymorphism to achieve the required behaviour.
-#pragma warning restore S4487 // Unread "private" fields should be removed
-#pragma warning restore IDE0052 // Remove unread private members
 
-			public MyEventBusCatcher(EventBus<TEvent> bus, FIFOPTACollection<TEvent> pouch, DCEventRouter<TClient, TEvent> keepAlive)
+			public MyEventBusCatcher(EventBus<TEvent> bus, FIFOPTACollection<TEvent> pouch)
 			{
 				_pouch = pouch;
 				_bus = bus;
-				_keepAlive = keepAlive;
 				_source = new();
 			}
 

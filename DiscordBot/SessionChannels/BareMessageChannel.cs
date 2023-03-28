@@ -57,7 +57,7 @@ public class BareMessageChannel : ISessionChannel
 		Task sendJob;
 		try
 		{
-			await using var __ = await _lock.BlockAsyncLock();
+			await using var ___ = await _lock.ScopeAsyncLock();
 			if (_messageId == null)
 				return;
 
@@ -77,7 +77,7 @@ public class BareMessageChannel : ISessionChannel
 
 	public async Task<EventBus<TEvent>> GetSessionRelatedEvents<TEvent>() where TEvent : class
 	{
-		await using var __ = await _lock.BlockAsyncLock();
+		await using var ___ = await _lock.ScopeAsyncLock();
 
 #pragma warning disable CS8603 // Possible null reference return.
 		if (typeof(TEvent).IsEquivalentTo(typeof(MessageCreateEventArgs)))
@@ -107,7 +107,7 @@ public class BareMessageChannel : ISessionChannel
 
 	public async Task RemoveMessage()
 	{
-		await using var __ = await _lock.BlockAsyncLock();
+		await using var ___ = await _lock.ScopeAsyncLock();
 		if (_messageId == null)
 			return;
 
@@ -127,7 +127,7 @@ public class BareMessageChannel : ISessionChannel
 
 	public async Task SendMessage(UniversalMessageBuilder content)
 	{
-		await using var __ = await _lock.BlockAsyncLock();
+		await using var ___ = await _lock.ScopeAsyncLock();
 		if (!IsUsable)
 			throw new Exception();
 
