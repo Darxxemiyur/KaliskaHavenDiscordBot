@@ -1,14 +1,16 @@
-﻿using Name.Bayfaderix.Darxxemiyur.General;
+﻿using KaliskaHaven.Shop;
+
+using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Glue.Shop;
 
 public interface ICheck
 {
-	IAsyncEnumerable<IIdentifiable<object>> Identifyables {
+	IAsyncEnumerable<IIdentifiable<ICartItem>> Identifyables {
 		get;
 	}
 
-	Task AddToCheck(IIdentifiable<object> identifyable);
+	Task AddToCheck(IIdentifiable<ICartItem> identifyable);
 
-	Task RemoveFromCheck(IIdentifiable<object> identifyable);
+	Task RemoveFromCheck(IIdentifiable<ICartItem> identifyable);
 }

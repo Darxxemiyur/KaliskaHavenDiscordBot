@@ -19,4 +19,5 @@ public interface IRequirement
 	/// <param name="customer"></param>
 	/// <returns>True if customer meets requirements. False otherwise.</returns>
 	Task<bool> CustomerVisit(ICustomer customer);
+
 }

@@ -1,7 +1,12 @@
-﻿namespace KaliskaHaven.Shop;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
+
+namespace KaliskaHaven.Shop;
 
 public interface IShopItem
 {
+	IMetaIdentity MetaIdentity {
+		get;
+	}
 	ICollection<IRequirement> PreRequestiments {
 		get;
 	}
