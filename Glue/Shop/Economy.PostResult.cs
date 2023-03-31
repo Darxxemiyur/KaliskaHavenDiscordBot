@@ -31,10 +31,7 @@ public abstract class EconomyPostResult : IPostResult
 
 	protected abstract Task WithdrawAndLog(ICustomer customer, IDbWallet wallet, ICartItem details, Currency currency);
 
-	protected Currency CalculatePrice(ICartItem citem) => new() {
-		CurrencyType = Price.CurrencyType,
-		Quantity = (long)Math.Round(Price.Quantity * citem.Quantity)
-	};
+	protected Currency CalculatePrice(ICartItem citem) => new(Price.CurrencyType, (long)Math.Round(Price.Quantity / 1f));
 
 	private static async Task<IDbWallet?> GetWallet(IMessageCommunicable commie)
 	{
