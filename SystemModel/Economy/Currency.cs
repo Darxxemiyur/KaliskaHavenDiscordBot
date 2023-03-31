@@ -27,6 +27,8 @@ public class Currency
 
 	public const int Delim = 100;
 
+	public Currency(CurrencyType type, long quantity) => (CurrencyType, Quantity) = (type, quantity / Delim);
+
 	public static implicit operator float(Currency currency) => currency.Quantity / (float)Delim;
 
 	public static implicit operator double(Currency currency) => currency.Quantity / (double)Delim;

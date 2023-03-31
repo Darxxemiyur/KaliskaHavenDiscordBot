@@ -2,11 +2,8 @@
 
 namespace KaliskaHaven.Shop;
 
-public interface IShopItem
+public interface IShopItem : IIdentifiable<IShopItem>
 {
-	IMetaIdentity MetaIdentity {
-		get;
-	}
 	ICollection<IRequirement> PreRequestiments {
 		get;
 	}

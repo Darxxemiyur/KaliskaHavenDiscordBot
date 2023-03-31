@@ -24,7 +24,7 @@ public interface ICartItem : IIdentifiable<ICartItem>
 	/// <summary>
 	/// Set of options available for this cart item.
 	/// </summary>
-	ICollection<IConfigurableOption> Options {
+	IEnumerable<IConfigurableOption> Options {
 		get;
 	}
 
