@@ -18,7 +18,7 @@ public interface IPostResult
 	Task<bool> TryReserveOnCustomer(ICustomer customer, ICartItem details);
 
 	/// <summary>
-	/// Revert applied/reserved rervations.
+	/// Revert applied/reserved reservations.
 	/// </summary>
 	/// <param name="customer"></param>
 	/// <returns></returns>

@@ -4,7 +4,7 @@ using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Database.Shop;
 
-public sealed class ShopItem : IShopItem, IIdentifiable<IShopItem>
+public sealed class ShopItem : IShopItem
 {
 	public ulong ID {
 		get; set;
@@ -17,15 +17,15 @@ public sealed class ShopItem : IShopItem, IIdentifiable<IShopItem>
 		get;
 	} = typeof(ShopItem);
 
-	public ICollection<IRequirement> PreRequestiments {
+	public IAcquirable<ICollection<IRequirement>> PreRequestiments {
 		get;
 	}
 
-	public ICollection<IPostResult> PostResults {
+	public IAcquirable<ICollection<IPostResult>> PostResults {
 		get;
 	}
 
-	public ICollection<IOptionInfo> Options {
+	public IAcquirable<ICollection<IOptionInfo>> Options {
 		get;
 	}
 

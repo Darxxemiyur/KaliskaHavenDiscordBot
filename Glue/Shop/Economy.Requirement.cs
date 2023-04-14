@@ -19,11 +19,7 @@ public class EconomyRequirement : IRequirement
 
 	public async Task<bool> CustomerVisit(ICustomer customer)
 	{
-		var commie = await customer.GetCommunicator();
-
-		var res = await commie.TellInternalAsync(new EcoTellMessage(EcoTellMsgEnum.GetWallet));
-
-		if (res.Code != 0 || res.Result is not IDbWallet wallet)
+		if (await customer.GetWallet() is var wallet && wallet is null)
 			return false;
 
 		var currency = await wallet.Get(Price.CurrencyType);

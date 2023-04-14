@@ -22,8 +22,7 @@ public abstract class EconomyPostResult : IPostResult
 
 	public async Task ApplyOnCustomer(ICustomer customer, ICartItem details)
 	{
-		var commie = await customer.GetCommunicator();
-		if (await GetWallet(commie) is var wallet && wallet is null)
+		if (await customer.GetWallet() is var wallet && wallet is null)
 			throw new InvalidOperationException();
 
 		await this.WithdrawAndLog(customer, wallet, details, this.CalculatePrice(details));
@@ -33,17 +32,9 @@ public abstract class EconomyPostResult : IPostResult
 
 	protected Currency CalculatePrice(ICartItem citem) => new(Price.CurrencyType, (long)Math.Round(Price.Quantity / 1f));
 
-	private static async Task<IDbWallet?> GetWallet(IMessageCommunicable commie)
-	{
-		var res = await commie.TellInternalAsync(new EcoTellMessage(EcoTellMsgEnum.GetWallet));
-
-		return res.Code != 0 || res.Result is not IDbWallet wallet ? null : wallet;
-	}
-
 	public async Task<bool> TryReserveOnCustomer(ICustomer customer, ICartItem details)
 	{
-		var commie = await customer.GetCommunicator();
-		if (await GetWallet(commie) is var wallet && wallet is null)
+		if (await customer.GetWallet() is var wallet && wallet is null)
 			return false;
 
 		var currency = await wallet.Get(Price.CurrencyType);

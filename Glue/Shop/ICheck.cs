@@ -6,7 +6,7 @@ namespace KaliskaHaven.Glue.Shop;
 
 public interface ICheck
 {
-	IAsyncEnumerable<IIdentifiable<ICartItem>> Identifyables {
+	IAsyncEnumerable<IIdentifiable<ICartItem>> CheckItems {
 		get;
 	}
 

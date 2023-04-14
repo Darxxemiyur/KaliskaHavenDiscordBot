@@ -2,11 +2,29 @@
 
 namespace KaliskaHaven.Shop;
 
+/// <summary>
+/// Target that acquires afforded items.
+/// </summary>
 public interface ICustomer
 {
-	Task AcceptPostResult(IPostResult postResult, ICartItem details);
-
-	Task RevertPostResult(IPostResult postResult, ICartItem details);
+	/// <summary>
+	/// Apply post result with removal of reservations.
+	/// </summary>
+	/// <param name="postResult"></param>
+	/// <returns></returns>
+	Task ApplyPostResult(IPostResult postResult);
+	/// <summary>
+	/// Make Post Result Reservation
+	/// </summary>
+	/// <param name="postResult"></param>
+	/// <returns></returns>
+	Task ApplyPRReservation(IPostResult postResult);
+	/// <summary>
+	/// Revert Post Result reservation
+	/// </summary>
+	/// <param name="postResult"></param>
+	/// <returns></returns>
+	Task RevertPRReservation(IPostResult postResult);
 
 	/// <summary>
 	/// Accept requirement for judging.
@@ -16,7 +34,8 @@ public interface ICustomer
 	Task<bool> AcceptRequirement(IRequirement requirement, ICartItem details);
 
 	/// <summary>
+	/// Presents an ambiguous and un-typed way of communication with the implementation.
 	/// </summary>
 	/// <returns></returns>
-	Task<IMessageCommunicable> GetCommunicator();
+	Task<ICustomerCommunicable> GetCommunicator();
 }
