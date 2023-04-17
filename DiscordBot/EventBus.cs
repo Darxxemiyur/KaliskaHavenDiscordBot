@@ -1,5 +1,4 @@
 ﻿using Name.Bayfaderix.Darxxemiyur.Collections;
-using Name.Bayfaderix.Darxxemiyur.Extensions;
 using Name.Bayfaderix.Darxxemiyur.General;
 using Name.Bayfaderix.Darxxemiyur.Tasks;
 
@@ -13,11 +12,14 @@ namespace KaliskaHaven.DiscordClient
 		Pass,
 		Remove,
 	}
+
 	internal interface IEventBusSource<TEvent> where TEvent : class
 	{
 		Task ReEnqueue(IEnumerable<TEvent> events);
+
 		Task OutsourceReEnqueue(FIFOFBACollection<TEvent> pouch);
 	}
+
 	/// <summary>
 	/// Link between orderer and passer.
 	/// </summary>
@@ -53,6 +55,7 @@ namespace KaliskaHaven.DiscordClient
 			_back = back;
 			_flags = EventBusInfo.Pass;
 		}
+
 		/// <summary>
 		/// Accept item to the storage.
 		/// </summary>

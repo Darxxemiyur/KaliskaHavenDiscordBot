@@ -13,9 +13,11 @@ public abstract class EconomyPostResult : IPostResult
 	private IEconomyData Data {
 		get;
 	}
+
 	public abstract IIdentity? Identity {
 		get;
 	}
+
 	public abstract IPostResult? Identifyable {
 		get;
 	}

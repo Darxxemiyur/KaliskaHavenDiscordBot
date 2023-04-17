@@ -19,8 +19,7 @@ public interface IItem
 	}
 
 	/// <summary>
-	/// The item. Because an Item is never guaranteed to have strict set of properties, the best way
-	/// to access it would be soft.
+	/// The item. Because an Item is never guaranteed to have strict set of properties, the best way to access it would be soft.
 	/// </summary>
 	JObject Item {
 		get;

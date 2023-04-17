@@ -1,11 +1,7 @@
-﻿using DisCatSharp.Entities;
-
-using KaliskaHaven.Database;
+﻿using KaliskaHaven.Database;
 using KaliskaHaven.Database.Economy;
 using KaliskaHaven.Database.Entities;
 using KaliskaHaven.Economy;
-
-using Microsoft.EntityFrameworkCore;
 
 using Name.Bayfaderix.Darxxemiyur.Async;
 using Name.Bayfaderix.Darxxemiyur.Extensions;

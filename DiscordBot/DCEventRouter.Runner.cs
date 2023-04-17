@@ -132,6 +132,7 @@ public sealed partial class DCEventRouter<TClient, TEvent> where TClient : BaseD
 
 			return isPassed;
 		}
+
 		public async Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, IEventBusSource<TEvent> requeuer, CancellationToken token = default)
 		{
 			await using var __ = await _lock.ScopeAsyncLock();

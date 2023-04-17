@@ -13,8 +13,7 @@ namespace KaliskaHaven.DiscordClient
 		private readonly Runner _runner;
 
 		/// <summary>
-		/// We dont care about the exact type of the catcher, we just care that it needs to be
-		/// disposed of when we are done with event router.
+		/// We dont care about the exact type of the catcher, we just care that it needs to be disposed of when we are done with event router.
 		/// </summary>
 		private readonly IEventCatcher _catcher;
 
@@ -70,9 +69,7 @@ namespace KaliskaHaven.DiscordClient
 		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, bool> predictator, CancellationToken token = default) => PlaceRequest(x => Task.FromResult(predictator(x)), token);
 
 		/// <summary>
-		/// Caller manages the lifetime of the EventBus. The EventRouter uses weak reference to
-		/// access the EventBus. Upon being GC collected, the EventBuss will place its event bag
-		/// back into router.
+		/// Caller manages the lifetime of the EventBus. The EventRouter uses weak reference to access the EventBus. Upon being GC collected, the EventBuss will place its event bag back into router.
 		/// </summary>
 		/// <param name="predictator"></param>
 		/// <param name="token"></param>

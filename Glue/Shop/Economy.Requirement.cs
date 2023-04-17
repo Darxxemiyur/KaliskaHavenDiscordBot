@@ -16,9 +16,11 @@ public class EconomyRequirement : IRequirement
 	private IEconomyData Data {
 		get;
 	}
+
 	public IIdentity? Identity {
 		get;
 	}
+
 	public IRequirement? Identifyable {
 		get;
 	}

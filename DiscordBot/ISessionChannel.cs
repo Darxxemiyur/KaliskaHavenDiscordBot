@@ -3,9 +3,7 @@
 namespace KaliskaHaven.DiscordClient
 {
 	/// <summary>
-	/// Discord Session Channel. Exposes simple, easy to use way to send and receive text and files
-	/// in/from discord. Behavior is not constrained. There are no guarantees in methods working the
-	/// same way. Beware.
+	/// Discord Session Channel. Exposes simple, easy to use way to send and receive text and files in/from discord. Behavior is not constrained. There are no guarantees in methods working the same way. Beware.
 	/// </summary>
 	public interface ISessionChannel : IMessageCommunicable
 	{
@@ -17,8 +15,7 @@ namespace KaliskaHaven.DiscordClient
 		}
 
 		/// <summary>
-		/// Attempts to transform current session channel of one type to another. Always returns a
-		/// new instance of the passed type.
+		/// Attempts to transform current session channel of one type to another. Always returns a new instance of the passed type.
 		/// </summary>
 		/// <typeparam name="TNewSessionChannel">The new session channel instance.</typeparam>
 		/// <param name="channel"></param>
@@ -34,8 +31,7 @@ namespace KaliskaHaven.DiscordClient
 		bool CanTransformAs<TNewSessionChannel>() where TNewSessionChannel : IServiceProvider;
 
 		/// <summary>
-		/// Attempts to transform current session channel of one type to another. May throw an
-		/// exception. Always returns a new instance of the passed type.
+		/// Attempts to transform current session channel of one type to another. May throw an exception. Always returns a new instance of the passed type.
 		/// </summary>
 		/// <typeparam name="TNewSessionChannel"></typeparam>
 		/// <param name="channel"></param>

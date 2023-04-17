@@ -25,18 +25,14 @@ public interface IInventory
 	/// Insert an item into inventory.
 	/// </summary>
 	/// <param name="item">An item to insert.</param>
-	/// <returns>
-	/// A tuple with status of operation, and the identifiable inserted item, if it was inserted.
-	/// </returns>
+	/// <returns>A tuple with status of operation, and the identifiable inserted item, if it was inserted.</returns>
 	Task<(bool status, IIdentifiable<IItem> item)> InsertItem(IItem item);
 
 	/// <summary>
 	/// Insert an identifiable item into inventory.
 	/// </summary>
 	/// <param name="item">An identifiable item to insert.</param>
-	/// <returns>
-	/// A tuple with status of operation and the identifiable inserted item, if it was inserted.
-	/// </returns>
+	/// <returns>A tuple with status of operation and the identifiable inserted item, if it was inserted.</returns>
 	Task<(bool status, IIdentifiable<IItem> item)> InsertItem(IIdentifiable<IItem> item);
 
 	/// <summary>

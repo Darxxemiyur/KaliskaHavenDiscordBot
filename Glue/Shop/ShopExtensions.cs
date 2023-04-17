@@ -11,6 +11,7 @@ public static class ShopExtensions
 
 		return await commie.GetWallet();
 	}
+
 	public static async Task<IDbWallet?> GetWallet(this ICustomerCommunicable customerC)
 	{
 		var res = await customerC.TellInternalAsync(new EcoTellMessage(EcoTellMsgEnum.GetWallet));

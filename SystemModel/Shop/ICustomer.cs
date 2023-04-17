@@ -1,6 +1,4 @@
-﻿using Name.Bayfaderix.Darxxemiyur.General;
-
-namespace KaliskaHaven.Shop;
+﻿namespace KaliskaHaven.Shop;
 
 /// <summary>
 /// Target that acquires afforded items.
@@ -13,12 +11,14 @@ public interface ICustomer
 	/// <param name="postResult"></param>
 	/// <returns></returns>
 	Task ApplyPostResult(IPostResult postResult);
+
 	/// <summary>
 	/// Make Post Result Reservation
 	/// </summary>
 	/// <param name="postResult"></param>
 	/// <returns></returns>
 	Task ApplyPRReservation(IPostResult postResult);
+
 	/// <summary>
 	/// Revert Post Result reservation
 	/// </summary>

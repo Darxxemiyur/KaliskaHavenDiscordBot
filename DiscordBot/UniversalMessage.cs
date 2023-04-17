@@ -3,8 +3,7 @@
 namespace KaliskaHaven.DiscordClient
 {
 	/// <summary>
-	/// Universal message container. Fancy way of just presenting what you want to display
-	/// regardless of the implementation details.
+	/// Universal message container. Fancy way of just presenting what you want to display regardless of the implementation details.
 	/// </summary>
 	public class UniversalMessageBuilder
 	{

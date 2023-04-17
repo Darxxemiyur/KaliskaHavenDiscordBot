@@ -14,6 +14,7 @@ public interface IGlueService
 	/// </summary>
 	/// <returns></returns>
 	Task<KaliskaDB> GetKaliskaDB();
+
 	/// <summary>
 	/// Get wallet creator.
 	/// </summary>
@@ -25,5 +26,4 @@ public interface IGlueService
 	/// </summary>
 	/// <returns></returns>
 	Task<UserCreator> GetUserCreator();
-
 }
