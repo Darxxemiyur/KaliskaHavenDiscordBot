@@ -1,11 +1,9 @@
-﻿namespace KaliskaHaven.Shop;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
 
-public interface IRequirement
+namespace KaliskaHaven.Shop;
+
+public interface IRequirement : IIdentifiable<IRequirement>
 {
-	string RequirementType {
-		get;
-	}
-
 	/// <summary>
 	/// List of types the ICustomer is required to have access to.
 	/// </summary>
@@ -19,5 +17,4 @@ public interface IRequirement
 	/// <param name="customer"></param>
 	/// <returns>True if customer meets requirements. False otherwise.</returns>
 	Task<bool> CustomerVisit(ICustomer customer);
-
 }

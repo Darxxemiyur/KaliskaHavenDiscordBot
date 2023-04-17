@@ -4,6 +4,7 @@ using DisCatSharp.EventArgs;
 using KaliskaHaven.Database;
 using KaliskaHaven.DiscordClient;
 using KaliskaHaven.DiscordClient.SessionChannels;
+using KaliskaHaven.Glue;
 using KaliskaHaven.Glue.Economy;
 
 using Name.Bayfaderix.Darxxemiyur.Node.Network;
@@ -14,9 +15,11 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 	{
 		private readonly BareMessageChannel _ch;
 		private readonly DiscordUser _user;
+		private readonly IGlueService _gs;
 
-		public Balance(BareMessageChannel channel, DiscordUser user)
+		public Balance(IGlueService gs, BareMessageChannel channel, DiscordUser user)
 		{
+			_gs = gs;
 			_user = user;
 			_ch = channel;
 		}
@@ -27,8 +30,9 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 		{
 			await using var context = new KaliskaDB();
 			var msg = new UniversalMessageBuilder();
+			var wc = await _gs.GetWalletCreator(context);
 
-			var (person, wallet) = await Wallet.EnsureCreated(context, _user);
+			var (person, wallet) = await wc.EnsureCreated(_user);
 
 			await wallet.EnsureFullyLoaded();
 			var usr = await _user.GetFromApiAsync();
@@ -37,9 +41,9 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 			using var wla = await Wallet.GetWalletImage(wallet, this.GetCurrencyList(wallet.DbCurrencies), usr.UsernameWithDiscriminator, userAvatar);
 			var ses = await _ch.GetSessionRelatedEvents<MessageCreateEventArgs>();
 			var getter = ses.GetItem();
-			var fname = string.Join('.', "Avatar", userAvatar.Split('.').LastOrDefault()?.Split('?').FirstOrDefault());
+			var fname = string.Join('.', "Avatar", userAvatar.Split('.').LastOrDefault()?.Split('?')?.FirstOrDefault());
 			await _ch.SendMessage(new UniversalMessageBuilder().SetFile(fname, wla));
-			var imgUrl = (await getter).Message.Attachments.First().ProxyUrl;
+			var imgUrl = (await getter).Message.Attachments[0].ProxyUrl;
 			msg.AddEmbeds(new DiscordEmbedBuilder().WithThumbnail(userAvatar)
 				.WithImageUrl(imgUrl).WithColor(new DiscordColor(210, 190, 30))
 				.AddField(new DiscordEmbedField("User:", $"<@{person.DiscordId}>"))

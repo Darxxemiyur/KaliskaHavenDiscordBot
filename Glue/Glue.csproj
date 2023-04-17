@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Inventory\" />
-    <Folder Include="Social\" />
   </ItemGroup>
 
   <ItemGroup>

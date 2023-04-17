@@ -1,6 +1,8 @@
-﻿namespace KaliskaHaven.Shop;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
 
-public interface IPostResult
+namespace KaliskaHaven.Shop;
+
+public interface IPostResult : IIdentifiable<IPostResult>
 {
 	/// <summary>
 	/// Apply reservations.

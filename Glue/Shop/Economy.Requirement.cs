@@ -2,6 +2,8 @@
 using KaliskaHaven.Economy;
 using KaliskaHaven.Shop;
 
+using Name.Bayfaderix.Darxxemiyur.General;
+
 namespace KaliskaHaven.Glue.Shop;
 
 public class EconomyRequirement : IRequirement
@@ -12,6 +14,12 @@ public class EconomyRequirement : IRequirement
 	public Currency Price => Data.Money;
 
 	private IEconomyData Data {
+		get;
+	}
+	public IIdentity? Identity {
+		get;
+	}
+	public IRequirement? Identifyable {
 		get;
 	}
 
@@ -26,4 +34,6 @@ public class EconomyRequirement : IRequirement
 
 		return Price.Quantity <= (currency?.Quantity ?? 0);
 	}
+
+	public bool Equals<TId>(IIdentifiable<TId> to) => throw new NotImplementedException();
 }

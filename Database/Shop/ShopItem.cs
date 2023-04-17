@@ -1,5 +1,6 @@
 ﻿using KaliskaHaven.Shop;
 
+using Name.Bayfaderix.Darxxemiyur.Extensions;
 using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Database.Shop;
@@ -17,17 +18,23 @@ public sealed class ShopItem : IShopItem
 		get;
 	} = typeof(ShopItem);
 
-	public IAcquirable<ICollection<IRequirement>> PreRequestiments {
+	public ICollection<IRequirement>? InnerPreRequestiments {
 		get;
 	}
 
-	public IAcquirable<ICollection<IPostResult>> PostResults {
+	public ICollection<IPostResult>? InnerPostResults {
 		get;
 	}
 
-	public IAcquirable<ICollection<IOptionInfo>> Options {
+	public ICollection<IOptionInfo>? InnerOptions {
 		get;
 	}
+
+	public ICollection<IRequirement> PreRequestiments => InnerPreRequestiments.ThrowIfNull();
+
+	public ICollection<IPostResult> PostResults => InnerPostResults.ThrowIfNull();
+
+	public ICollection<IOptionInfo> Options => InnerOptions.ThrowIfNull();
 
 	public bool Equals<TId>(IIdentifiable<TId> to) => to is ShopItem si && si.ID == ID;
 }

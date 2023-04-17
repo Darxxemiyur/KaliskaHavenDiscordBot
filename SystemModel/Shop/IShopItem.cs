@@ -4,15 +4,15 @@ namespace KaliskaHaven.Shop;
 
 public interface IShopItem : IIdentifiable<IShopItem>
 {
-	IAcquirable<ICollection<IRequirement>> PreRequestiments {
+	ICollection<IRequirement> PreRequestiments {
 		get;
 	}
 
-	IAcquirable<ICollection<IPostResult>> PostResults {
+	ICollection<IPostResult> PostResults {
 		get;
 	}
 
-	IAcquirable<ICollection<IOptionInfo>> Options {
+	ICollection<IOptionInfo> Options {
 		get;
 	}
 }

@@ -17,49 +17,6 @@ namespace KaliskaHaven.Glue.Economy
 	{
 		private static readonly MySingleThreadSyncContext s_My = new(ThreadPriority.Lowest);
 
-		public static async Task<(Person, Wallet)> EnsureCreated(KaliskaDB db, DiscordUser user)
-		{
-			var person = await db.Persons.FirstOrDefaultAsync(x => x.DiscordId == user.Id);
-			if (person == null)
-			{
-				person = new Person {
-					DiscordId = user.Id,
-				};
-
-				await using var tr = await db.Database.BeginTransactionAsync();
-				await db.Persons.AddAsync(person);
-				await db.SaveChangesAsync();
-				await tr.CommitAsync();
-			}
-
-			var wallet = await EnsureCreated(db, person);
-
-			return (person, wallet);
-		}
-
-		public static async Task<Wallet> EnsureCreated(KaliskaDB db, Person person)
-		{
-			var walletT = await db.Wallets.FirstOrDefaultAsync(x => x.Owner == person);
-
-			await using var tr = await db.Database.BeginTransactionAsync();
-			if (walletT != null)
-			{
-				await tr.CommitAsync();
-				return new Wallet(db, walletT);
-			}
-
-			var wallet = new Database.Economy.Wallet();
-			person.Wallet = wallet;
-			wallet.Owner = person;
-
-			await db.Wallets.AddAsync(wallet);
-			await db.SaveChangesAsync();
-
-			await tr.CommitAsync();
-
-			return new Wallet(db, wallet);
-		}
-
 		public static async Task<Stream> GetWalletImage(Wallet wallet, string currencies, string username, string userUrl) => await MyTaskExtensions.RunOnScheduler(new Func<Task<Stream>>(async () => {
 			using var hc = new HttpClient();
 			using var iconImgH = await hc.GetAsync(userUrl);

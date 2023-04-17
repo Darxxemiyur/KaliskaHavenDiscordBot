@@ -13,6 +13,12 @@ public abstract class EconomyPostResult : IPostResult
 	private IEconomyData Data {
 		get;
 	}
+	public abstract IIdentity? Identity {
+		get;
+	}
+	public abstract IPostResult? Identifyable {
+		get;
+	}
 
 	protected EconomyPostResult(IEconomyData data) => Data = data;
 
@@ -42,4 +48,6 @@ public abstract class EconomyPostResult : IPostResult
 
 		return price.Quantity <= (currency?.Quantity ?? 0);
 	}
+
+	public abstract bool Equals<TId>(IIdentifiable<TId> to);
 }
