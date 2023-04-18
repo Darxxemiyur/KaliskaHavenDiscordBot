@@ -9,25 +9,14 @@ namespace KaliskaHaven.Glue.Economy
 {
 	public sealed class WalletCreator
 	{
-		private readonly KaliskaDB _db;
+		private readonly WalletCreatorArgs _args;
 
-		public WalletCreator(KaliskaDB db) => _db = db;
+		public WalletCreator(WalletCreatorArgs args) => _args = args;
 
 		public async Task<(Person, Wallet)> EnsureCreated(DiscordUser user)
 		{
-			var person = await _db.Persons.FirstOrDefaultAsync(x => x.DiscordId == user.Id);
-			if (person == null)
-			{
-				person = new Person {
-					DiscordId = user.Id,
-				};
-
-				await using var tr = await _db.Database.BeginTransactionAsync();
-				await _db.Persons.AddAsync(person);
-				await _db.SaveChangesAsync();
-				await tr.CommitAsync();
-			}
-
+			var uc = await _args.Services.GetUserCreator(new Social.UserCreatorArgs(_args.Services, _args.KaliskaDB));
+			var person = await uc.EnsureCreated(user);
 			var wallet = await this.EnsureCreated(person);
 
 			return (person, wallet);
@@ -35,25 +24,28 @@ namespace KaliskaHaven.Glue.Economy
 
 		public async Task<Wallet> EnsureCreated(Person person)
 		{
-			var walletT = await _db.Wallets.FirstOrDefaultAsync(x => x.Owner == person);
+			var db = _args.KaliskaDB ?? await _args.Services.GetKaliskaDB();
+			var walletT = await db.Wallets.FirstOrDefaultAsync(x => x.Owner == person);
 
-			await using var tr = await _db.Database.BeginTransactionAsync();
+			await using var tr = await db.Database.BeginTransactionAsync();
 			if (walletT != null)
 			{
 				await tr.CommitAsync();
-				return new Wallet(_db, walletT);
+				return new Wallet(db, walletT);
 			}
 
 			var wallet = new Database.Economy.Wallet();
 			person.Wallet = wallet;
 			wallet.Owner = person;
 
-			await _db.Wallets.AddAsync(wallet);
-			await _db.SaveChangesAsync();
+			await db.Wallets.AddAsync(wallet);
+			await db.SaveChangesAsync();
 
 			await tr.CommitAsync();
 
-			return new Wallet(_db, wallet);
+			return new Wallet(db, wallet);
 		}
 	}
+
+	public sealed record class WalletCreatorArgs(IGlueServices Services, KaliskaDB? KaliskaDB);
 }

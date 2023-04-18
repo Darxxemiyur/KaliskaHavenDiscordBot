@@ -15,9 +15,9 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 	{
 		private readonly BareMessageChannel _ch;
 		private readonly DiscordUser _user;
-		private readonly IGlueService _gs;
+		private readonly IGlueServices _gs;
 
-		public Balance(IGlueService gs, BareMessageChannel channel, DiscordUser user)
+		public Balance(IGlueServices gs, BareMessageChannel channel, DiscordUser user)
 		{
 			_gs = gs;
 			_user = user;
@@ -28,7 +28,7 @@ namespace KaliskaHaven.DiscordUI.EconomyUI
 
 		private async Task<StepInfo?> EntryMenu(StepInfo? prev)
 		{
-			await using var context = new KaliskaDB();
+			await using var context = await _gs.GetKaliskaDB();
 			var msg = new UniversalMessageBuilder();
 			var wc = await _gs.GetWalletCreator(context);
 

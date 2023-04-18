@@ -5,12 +5,19 @@ namespace KaliskaHaven.DiscordClient
 	/// <summary>
 	/// Discord Session Channel. Exposes simple, easy to use way to send and receive text and files in/from discord. Behavior is not constrained. There are no guarantees in methods working the same way. Beware.
 	/// </summary>
-	public interface ISessionChannel : IMessageCommunicable
+	public interface ISessionChannel
 	{
 		/// <summary>
 		/// True if this Session Channel is usable. False otherwise.
 		/// </summary>
 		bool IsUsable {
+			get;
+		}
+
+		/// <summary>
+		/// Communicable.
+		/// </summary>
+		IMessageCommunicable Comms {
 			get;
 		}
 

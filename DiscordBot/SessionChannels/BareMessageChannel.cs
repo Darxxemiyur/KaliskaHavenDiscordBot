@@ -8,25 +8,6 @@ namespace KaliskaHaven.DiscordClient.SessionChannels;
 
 public class BareMessageChannel : ISessionChannel
 {
-	private const string PLoad = "GetInfo";
-	private sealed record class RResult(int Code, string? Note, object? Result) : ITellResult
-	{
-		public static implicit operator TellResult(RResult r) => new TellResult(r);
-	}
-
-	public class Message : ITellMessage
-	{
-		public string? Note {
-			get;
-		}
-
-		object? ITellMessage.Message {
-			get;
-		}
-
-		public Message() => Note = PLoad;
-	}
-
 	private readonly IKaliskaBot _kaliska;
 	private readonly ulong _channelId;
 	private ulong? _messageId;
@@ -49,6 +30,10 @@ public class BareMessageChannel : ISessionChannel
 	}
 
 	public Task<CommunicableCapabilities> CapabilitiesAsync {
+		get;
+	}
+
+	public IMessageCommunicable Comms {
 		get;
 	}
 
@@ -156,23 +141,9 @@ public class BareMessageChannel : ISessionChannel
 		}
 	}
 
-	public async Task<TellResult> TellInternalAsync(TellMessage message)
-	{
-		if (message.IsNull || message.OriginalMessage is not Message || message.Note != PLoad)
-			return new TellResult();
-
-		return new RResult(0, $"{PLoad} Answer", null);
-	}
+	public bool TryTransformAs<TNewSessionChannel>(out TNewSessionChannel channel) where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
 
 	public bool CanTransformAs<TNewSessionChannel>() where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
 
 	public TNewSessionChannel TransformAs<TNewSessionChannel>() where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
-
-	public bool TryTransformAs<TNewSessionChannel>(out TNewSessionChannel channel) where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
-
-	public TellResult TellInternal(TellMessage message) => throw new NotImplementedException();
-
-	IEnumerable<TellResult> IMessageCommunicable.TellInternalProcedurally(TellMessage message) => throw new NotImplementedException();
-
-	public IAsyncEnumerable<TellResult> TellInternalProcedurallyAsync(TellMessage message) => throw new NotImplementedException();
 }

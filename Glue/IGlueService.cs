@@ -7,7 +7,7 @@ namespace KaliskaHaven.Glue;
 /// <summary>
 /// Interface of the services provider for the Glue layer.
 /// </summary>
-public interface IGlueService
+public interface IGlueServices
 {
 	/// <summary>
 	/// Acquire Kaliska's Database.
@@ -25,5 +25,6 @@ public interface IGlueService
 	/// Get user creator.
 	/// </summary>
 	/// <returns></returns>
-	Task<UserCreator> GetUserCreator();
+	Task<UserCreator> GetUserCreator(UserCreatorArgs args);
 }
+

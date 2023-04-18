@@ -9,12 +9,7 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 		public bool IsUsable {
 			get;
 		}
-
-		public CommunicableCapabilities Capabilities {
-			get;
-		}
-
-		public Task<CommunicableCapabilities> CapabilitiesAsync {
+		public IMessageCommunicable Comms {
 			get;
 		}
 
@@ -48,12 +43,5 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 
 		public bool TryTransformAs<TNewSessionChannel>(out TNewSessionChannel channel) where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
 
-		public Task<TellResult> TellInternalAsync(TellMessage message) => throw new NotImplementedException();
-
-		public TellResult TellInternal(TellMessage message) => throw new NotImplementedException();
-
-		public IEnumerable<TellResult> TellInternalProcedurally(TellMessage message) => throw new NotImplementedException();
-
-		public IAsyncEnumerable<TellResult> TellInternalProcedurallyAsync(TellMessage message) => throw new NotImplementedException();
 	}
 }

@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using KaliskaHaven.Database;
+using KaliskaHaven.Glue;
+using KaliskaHaven.Glue.Economy;
+using KaliskaHaven.Glue.Social;
+
+using Microsoft.Extensions.Configuration;
 
 using Name.Bayfaderix.Darxxemiyur.Async;
 using Name.Bayfaderix.Darxxemiyur.Extensions;
@@ -8,7 +13,7 @@ using System.Reflection;
 
 namespace KaliskaHaven.DiscordClient
 {
-	public class MyServices : IAsyncRunnable, IMyServices
+	public class MyServices : IAsyncRunnable, IMyServices, IGlueServices
 	{
 		private readonly KaliskaBot _kaliskaBot;
 
@@ -83,6 +88,10 @@ namespace KaliskaHaven.DiscordClient
 
 			return factory;
 		}
+
+		public Task<KaliskaDB> GetKaliskaDB() => throw new NotImplementedException();
+		public Task<WalletCreator> GetWalletCreator(KaliskaDB db) => throw new NotImplementedException();
+		public Task<UserCreator> GetUserCreator(UserCreatorArgs args) => throw new NotImplementedException();
 
 		public interface IDbFactory<TDatabase> where TDatabase : class
 		{

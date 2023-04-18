@@ -27,6 +27,7 @@ public class EconomyRequirement : IRequirement
 
 	public EconomyRequirement(IEconomyData data) => Data = data;
 
+	///<inheritdoc/>
 	public async Task<bool> CustomerVisit(ICustomer customer)
 	{
 		if (await customer.GetWallet() is var wallet && wallet is null)
