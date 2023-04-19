@@ -1,0 +1,1 @@
+Contains types that reference adjoined types.

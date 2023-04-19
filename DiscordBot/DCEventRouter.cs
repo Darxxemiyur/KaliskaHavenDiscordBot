@@ -2,18 +2,18 @@
 using DisCatSharp.Common.Utilities;
 using DisCatSharp.EventArgs;
 
-using Name.Bayfaderix.Darxxemiyur.Common;
-using Name.Bayfaderix.Darxxemiyur.Common.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Collections;
+using Name.Bayfaderix.Darxxemiyur.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Tasks;
 
 namespace KaliskaHaven.DiscordClient
 {
-	public sealed partial class DCEventRouter<TClient, TEvent> : IAsyncRunnable where TClient : BaseDiscordClient where TEvent : DiscordEventArgs
+	public sealed partial class DCEventRouter<TClient, TEvent> : IAsyncRunnable, IEventBusSource<TEvent> where TClient : BaseDiscordClient where TEvent : DiscordEventArgs
 	{
 		private readonly Runner _runner;
 
 		/// <summary>
-		/// We dont care about the exact type of the catcher, we just care that it needs to be
-		/// disposed of when we are done with event router.
+		/// We dont care about the exact type of the catcher, we just care that it needs to be disposed of when we are done with event router.
 		/// </summary>
 		private readonly IEventCatcher _catcher;
 
@@ -54,7 +54,7 @@ namespace KaliskaHaven.DiscordClient
 			_pendingChildren = new(true);
 			var pouch = new FIFOPTACollection<TEvent>();
 			_tScheduler = parent._tScheduler;
-			var catcher = new MyEventBusCatcher(bus, pouch, parent);
+			var catcher = new MyEventBusCatcher(bus, pouch);
 			_runner = new(parent._runner.KeepAliveReference, catcher, pouch, _tScheduler, _pendingChildren);
 			_catcher = catcher;
 			_runner.OnNonFiltered += catcher.ReturnEvent;
@@ -69,18 +69,19 @@ namespace KaliskaHaven.DiscordClient
 		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, bool> predictator, CancellationToken token = default) => PlaceRequest(x => Task.FromResult(predictator(x)), token);
 
 		/// <summary>
-		/// Caller manages the lifetime of the EventBus. The EventRouter uses weak reference to
-		/// access the EventBus. Upon being GC collected, the EventBuss will place its event bag
-		/// back into router.
+		/// Caller manages the lifetime of the EventBus. The EventRouter uses weak reference to access the EventBus. Upon being GC collected, the EventBuss will place its event bag back into router.
 		/// </summary>
 		/// <param name="predictator"></param>
 		/// <param name="token"></param>
 		/// <returns></returns>
-		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, CancellationToken token = default) => _runner.PlaceRequest(predictator, ReEqn, OnSyncDeathCallback, token);
-		private Task ReEqn(IEnumerable<TEvent> queue) => _catcher.ReEnqueue(queue);
+		public Task<EventBus<TEvent>> PlaceRequest(Func<TEvent, Task<bool>> predictator, CancellationToken token = default) => _runner.PlaceRequest(predictator, this, token);
 
-		private Task OnSyncDeathCallback(FIFOFBACollection<TEvent> pouchToRecover) => _runner.OnSyncDeathCallback(pouchToRecover);
+		// Do not modify. It keeps reference to the router, making it not GC collecteable to prevent deadlocks!
 
 		public Task RunRunnable(CancellationToken token = default) => ((IAsyncRunnable)_runner).RunRunnable(token);
+
+		Task IEventBusSource<TEvent>.ReEnqueue(IEnumerable<TEvent> events) => _catcher.ReEnqueue(events);
+
+		Task IEventBusSource<TEvent>.OutsourceReEnqueue(FIFOFBACollection<TEvent> pouch) => _runner.OnSyncDeathCallback(pouch);
 	}
 }

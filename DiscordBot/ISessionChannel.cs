@@ -1,9 +1,9 @@
-﻿namespace KaliskaHaven.DiscordClient
+﻿using Name.Bayfaderix.Darxxemiyur.General;
+
+namespace KaliskaHaven.DiscordClient
 {
 	/// <summary>
-	/// Discord Session Channel. Exposes simple, easy to use way to send and receive text and files
-	/// in/from discord. Behavior is not constrained. There are no guarantees in methods working the
-	/// same way. Beware.
+	/// Discord Session Channel. Exposes simple, easy to use way to send and receive text and files in/from discord. Behavior is not constrained. There are no guarantees in methods working the same way. Beware.
 	/// </summary>
 	public interface ISessionChannel
 	{
@@ -15,8 +15,14 @@
 		}
 
 		/// <summary>
-		/// Attempts to transform current session channel of one type to another. Always returns a
-		/// new instance of the passed type.
+		/// Communicable.
+		/// </summary>
+		IMessageCommunicable Comms {
+			get;
+		}
+
+		/// <summary>
+		/// Attempts to transform current session channel of one type to another. Always returns a new instance of the passed type.
 		/// </summary>
 		/// <typeparam name="TNewSessionChannel">The new session channel instance.</typeparam>
 		/// <param name="channel"></param>
@@ -32,8 +38,7 @@
 		bool CanTransformAs<TNewSessionChannel>() where TNewSessionChannel : IServiceProvider;
 
 		/// <summary>
-		/// Attempts to transform current session channel of one type to another. May throw an
-		/// exception. Always returns a new instance of the passed type.
+		/// Attempts to transform current session channel of one type to another. May throw an exception. Always returns a new instance of the passed type.
 		/// </summary>
 		/// <typeparam name="TNewSessionChannel"></typeparam>
 		/// <param name="channel"></param>
@@ -67,63 +72,5 @@
 		/// </summary>
 		/// <returns></returns>
 		Task RemoveMessage();
-
-		/// <summary>
-		/// Communicate Session Channel instance an object.
-		/// </summary>
-		/// <returns>True if instance has accepted and understood the message. False otherwise.</returns>
-		Task<TellResult> TellInternal(TellMessage message);
-
-		/// <summary>
-		/// Communicate Session Channel instance an object.
-		/// </summary>
-		/// <returns>Procedural communication channel that is up to the session channel instance to implement.</returns>
-		IAsyncEnumerable<TellResult> TellInternalProcedurally(TellMessage message);
-	}
-	/// <summary>
-	/// A non nullable value structure. Do not mistake for ITellMessage. They are not the same.
-	/// </summary>
-	public record struct TellMessage(ITellMessage? OriginalMessage) : ITellMessage
-	{
-		public bool IsNull => OriginalMessage == null;
-		public string? Note => OriginalMessage?.Note;
-		public object? Message => OriginalMessage?.Message;
-	}
-	/// <summary>
-	/// A non nullable value structure. Do not mistake for ITellResult. They are not the same.
-	/// </summary>
-	public record struct TellResult(ITellResult? OriginalResult) : ITellResult
-	{
-		public bool IsNull => OriginalResult == null;
-		public int Code => OriginalResult?.Code ?? -1;
-		public object? Payload => OriginalResult?.Payload;
-		public string? Note => OriginalResult?.Note;
-	}
-	/// <summary>
-	/// TellInternally's result interface.
-	/// </summary>
-	public interface ITellResult
-	{
-		int Code {
-			get;
-		}
-		object? Payload {
-			get;
-		}
-		string? Note {
-			get;
-		}
-	}
-	/// <summary>
-	/// TellInternally's message interface
-	/// </summary>
-	public interface ITellMessage
-	{
-		object? Message {
-			get;
-		}
-		string? Note {
-			get;
-		}
 	}
 }

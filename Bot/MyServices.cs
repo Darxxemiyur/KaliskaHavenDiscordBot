@@ -1,17 +1,19 @@
-﻿using KaliskaHaven.DiscordBot.src.DataStorage;
+﻿using KaliskaHaven.Database;
+using KaliskaHaven.Glue;
+using KaliskaHaven.Glue.Economy;
+using KaliskaHaven.Glue.Social;
 
 using Microsoft.Extensions.Configuration;
 
-using Name.Bayfaderix.Darxxemiyur.Common;
-using Name.Bayfaderix.Darxxemiyur.Common.Async;
-using Name.Bayfaderix.Darxxemiyur.Common.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Async;
+using Name.Bayfaderix.Darxxemiyur.Extensions;
+using Name.Bayfaderix.Darxxemiyur.Tasks;
 
-using System.Diagnostics;
 using System.Reflection;
 
 namespace KaliskaHaven.DiscordClient
 {
-	public class MyServices : IAsyncRunnable, IMyServices
+	public class MyServices : IAsyncRunnable, IMyServices, IGlueServices
 	{
 		private readonly KaliskaBot _kaliskaBot;
 
@@ -23,12 +25,14 @@ namespace KaliskaHaven.DiscordClient
 		public Task<IKaliskaBot> GetKaliskaBot() => Task.FromResult((IKaliskaBot)_kaliskaBot);
 
 		private const string ConfigFile = "bot.settings.json";
+
 		public async Task<Config> ParseConfiguration()
 		{
 			var conf = await this.Load();
 			await this.Update(conf);
 			return await this.Validate(conf) ? conf : throw new ArgumentException();
 		}
+
 		private async Task<bool> Validate(Config? conf)
 		{
 			return !string.IsNullOrEmpty(conf?.Discord?.Token);
@@ -36,8 +40,8 @@ namespace KaliskaHaven.DiscordClient
 
 		private async Task Update(Config? conf)
 		{
-
 		}
+
 		private async Task<Config?> Load()
 		{
 			IConfiguration config = await MyTaskExtensions.RunOnScheduler(() => new ConfigurationBuilder().AddJsonFile(ConfigFile).AddEnvironmentVariables().Build());
@@ -83,6 +87,15 @@ namespace KaliskaHaven.DiscordClient
 			await factory.PrepareFactory(this);
 
 			return factory;
+		}
+
+		public Task<KaliskaDB> GetKaliskaDB() => throw new NotImplementedException();
+		public Task<WalletCreator> GetWalletCreator(KaliskaDB db) => throw new NotImplementedException();
+		public Task<UserCreator> GetUserCreator(UserCreatorArgs args) => throw new NotImplementedException();
+
+		public interface IDbFactory<TDatabase> where TDatabase : class
+		{
+			Task PrepareFactory(MyServices myServices);
 		}
 	}
 }

@@ -9,12 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
-    <ProjectReference Include="..\Inventory\Inventory.csproj" />
-    <ProjectReference Include="..\KaliskaEconomy\Economy.csproj" />
-    <ProjectReference Include="..\KaliskaShop\Shop.csproj" />
+    <ProjectReference Include="..\Glue\Glue.csproj" />
     <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
-    <ProjectReference Include="..\SocialModel\SocialModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ShopUI\" />
   </ItemGroup>
 
 </Project>

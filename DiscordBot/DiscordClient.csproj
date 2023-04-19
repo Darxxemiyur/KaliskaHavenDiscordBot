@@ -9,6 +9,8 @@
     <AssemblyName>KaliskaHaven.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>6.0</AnalysisLevel>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

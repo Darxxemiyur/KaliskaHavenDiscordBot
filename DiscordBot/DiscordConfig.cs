@@ -12,7 +12,6 @@ namespace KaliskaHaven.DiscordClient
 			get; set;
 		}
 
-
 		public DiscordConfiguration GetConfig => new() {
 			Token = Token,
 			Intents = DiscordIntents.All,
