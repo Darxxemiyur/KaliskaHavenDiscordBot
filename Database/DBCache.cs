@@ -28,6 +28,7 @@ namespace KaliskaHaven.Database
 	public sealed class DBCache : IAsyncRunnable
 	{
 		private readonly LinkedList<DBCacheNode> _cache = new();
+		private readonly AsyncLocker _lock = new();
 		private readonly FIFOFBACollection<DBCacheNode> _relay = new();
 
 		public async Task RunRunnable(CancellationToken token = default)
@@ -43,6 +44,7 @@ namespace KaliskaHaven.Database
 
 		public async Task<KaliskaDB> Create()
 		{
+			await using var __ = await _lock.ScopeAsyncLock();
 			var node = new DBCacheNode();
 			node.DBBackend = new KaliskaDBBackend();
 			var db = new KaliskaDB(node);

@@ -1,4 +1,6 @@
-﻿namespace KaliskaHaven.Economy;
+﻿using Name.Bayfaderix.Darxxemiyur.General;
+
+namespace KaliskaHaven.Economy;
 
 public sealed class WithdrawResult
 {
@@ -12,7 +14,7 @@ public sealed class WithdrawResult
 	/// <summary>
 	/// Check for WithdrawResult.IsSuccessful.
 	/// </summary>
-	public Currency? Withdrawn => Transaction?.Withdrawn;
+	public IIdentifiable<Currency>? Withdrawn => Transaction?.Withdrawn;
 
 	/// <summary>
 	/// The transaction.

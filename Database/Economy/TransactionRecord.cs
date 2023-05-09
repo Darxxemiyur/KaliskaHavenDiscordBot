@@ -4,21 +4,29 @@ using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Database.Economy
 {
-	public sealed class TransactionRecord : ITransactionLog, IIdentifiable<ITransactionLog>
+	public sealed class TransactionRecord : TransactionLog, ITransactionLog, IIdentifiable<ITransactionLog>
 	{
 		public long ID {
 			get; set;
 		}
 
-		public TranscationKind Kind {
+		public override TranscationKind Kind {
 			get; set;
 		}
 
-		public Wallet? From {
+		public override IIdentifiable<IWallet>? From {
 			get; set;
 		}
 
-		public Wallet? To {
+		public override IIdentifiable<IWallet>? To {
+			get; set;
+		}
+
+		public Wallet? FromW {
+			get; set;
+		}
+
+		public Wallet? ToW {
 			get; set;
 		}
 
@@ -30,13 +38,13 @@ namespace KaliskaHaven.Database.Economy
 			get; set;
 		}
 
-		Currency? ITransactionLog.Withdrawn => Withdrawn;
+		IIdentifiable<Currency>? ITransactionLog.Withdrawn => Withdrawn;
 
 		public DbCurrency? Deposited {
 			get; set;
 		}
 
-		Currency? ITransactionLog.Deposited => Deposited;
+		IIdentifiable<Currency>? ITransactionLog.Deposited => Deposited;
 
 		public IIdentity? Identity => throw new NotImplementedException();
 		public ITransactionLog? Identifyable => this;
@@ -45,13 +53,14 @@ namespace KaliskaHaven.Database.Economy
 		{
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3358:Ternary operators should not be nested", Justification = "Fuck you.")]
 		public TransactionRecord(ITransactionLog log)
 		{
 			Kind = log.Kind;
-			From = log.From == null ? null : new Wallet(log.From);
-			To = log.To == null ? null : new Wallet(log.To);
-			Withdrawn = log.Withdrawn == null ? null : new DbCurrency(log.Withdrawn);
-			Deposited = log.Deposited == null ? null : new DbCurrency(log.Deposited);
+			From = log.From == null ? null : (log.From is Wallet fr ? fr : new Wallet(log.From));
+			To = log.To == null ? null : (log.To is Wallet to ? to : new Wallet(log.To));
+			Withdrawn = log.Withdrawn == null ? null : log.Withdrawn is DbCurrency w ? w : new DbCurrency(log.Withdrawn);
+			Deposited = log.Deposited == null ? null : log.Deposited is DbCurrency d ? d : new DbCurrency(log.Deposited);
 		}
 
 		public Type Type {

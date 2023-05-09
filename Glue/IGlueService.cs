@@ -1,4 +1,5 @@
 ﻿using KaliskaHaven.Database;
+using KaliskaHaven.DiscordClient;
 using KaliskaHaven.Glue.Economy;
 using KaliskaHaven.Glue.Social;
 
@@ -7,7 +8,7 @@ namespace KaliskaHaven.Glue;
 /// <summary>
 /// Interface of the services provider for the Glue layer.
 /// </summary>
-public interface IGlueServices
+public interface IGlueServices : IMyServices
 {
 	/// <summary>
 	/// Acquire Kaliska's Database.

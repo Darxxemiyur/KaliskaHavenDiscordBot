@@ -13,12 +13,14 @@ using System.Reflection;
 
 namespace KaliskaHaven.DiscordClient
 {
-	public class MyServices : IAsyncRunnable, IMyServices, IGlueServices
+	public class MyServices : IAsyncRunnable, IGlueServices
 	{
 		private readonly KaliskaBot _kaliskaBot;
+		private readonly DBCache _dbCache;
 
 		public MyServices()
 		{
+			_dbCache = new();
 			_kaliskaBot = new(this);
 		}
 
@@ -89,9 +91,9 @@ namespace KaliskaHaven.DiscordClient
 			return factory;
 		}
 
-		public Task<KaliskaDB> GetKaliskaDB() => throw new NotImplementedException();
-		public Task<WalletCreator> GetWalletCreator(KaliskaDB db) => throw new NotImplementedException();
-		public Task<UserCreator> GetUserCreator(UserCreatorArgs args) => throw new NotImplementedException();
+		public Task<KaliskaDB> GetKaliskaDB() => _dbCache.Create();
+		public async Task<WalletCreator> GetWalletCreator(KaliskaDB db) => new(new(this, db));
+		public async Task<UserCreator> GetUserCreator(UserCreatorArgs args) => new(args);
 
 		public interface IDbFactory<TDatabase> where TDatabase : class
 		{

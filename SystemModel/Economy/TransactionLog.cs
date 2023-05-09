@@ -2,31 +2,31 @@
 
 namespace KaliskaHaven.Economy;
 
-public sealed class TransactionLog : ITransactionLog
+public class TransactionLog : ITransactionLog
 {
-	public TranscationKind Kind {
+	public virtual TranscationKind Kind {
 		get; set;
 	}
 
-	public IIdentifiable<IWallet>? From {
+	public virtual IIdentifiable<IWallet>? From {
 		get; set;
 	}
 
-	public IIdentifiable<IWallet>? To {
+	public virtual IIdentifiable<IWallet>? To {
 		get; set;
 	}
 
-	public Currency? Withdrawn {
+	public virtual IIdentifiable<Currency>? Withdrawn {
 		get; set;
 	}
 
-	public Currency? Deposited {
+	public virtual IIdentifiable<Currency>? Deposited {
 		get; set;
 	}
 
 	public TransactionLog() => Kind = TranscationKind.FailedGeneral;
 
-	public TransactionLog(TranscationKind kind, IIdentifiable<IWallet> wallet, Currency quantity)
+	public TransactionLog(TranscationKind kind, IIdentifiable<IWallet> wallet, IIdentifiable<Currency> quantity)
 	{
 		if (kind is TranscationKind.Withdrawal or TranscationKind.FailedWithdrawal)
 		{
@@ -45,7 +45,7 @@ public sealed class TransactionLog : ITransactionLog
 		Kind = kind;
 	}
 
-	public TransactionLog(TranscationKind kind, IIdentifiable<IWallet> from, IIdentifiable<IWallet> to, Currency withdrawn, Currency deposited)
+	public TransactionLog(TranscationKind kind, IIdentifiable<IWallet> from, IIdentifiable<IWallet> to, IIdentifiable<Currency> withdrawn, IIdentifiable<Currency> deposited)
 	{
 		if (kind is not TranscationKind.Transfer and not TranscationKind.Exchange and not TranscationKind.FailedTransfer and not TranscationKind.FailedExchange)
 			throw new InvalidOperationException();

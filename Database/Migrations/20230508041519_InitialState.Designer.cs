@@ -11,9 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace KaliskaHaven.Database.Migrations
 {
-    [DbContext(typeof(KaliskaDB))]
-    [Migration("20230323202901_Hehe1")]
-    partial class Hehe1
+    [DbContext(typeof(KaliskaDBBackend))]
+    [Migration("20230508041519_InitialState")]
+    partial class InitialState
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,42 @@ namespace KaliskaHaven.Database.Migrations
                     b.HasIndex("WalletID");
 
                     b.ToTable("DbCurrencies", "discordbottie");
+                });
+
+            modelBuilder.Entity("KaliskaHaven.Database.Economy.TransactionRecord", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
+
+                    b.Property<long?>("DepositedID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("FromID")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("ToID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WithdrawnID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DepositedID");
+
+                    b.HasIndex("FromID");
+
+                    b.HasIndex("ToID");
+
+                    b.HasIndex("WithdrawnID");
+
+                    b.ToTable("TransactionRecords", "discordbottie");
                 });
 
             modelBuilder.Entity("KaliskaHaven.Database.Economy.Wallet", b =>
@@ -101,6 +137,33 @@ namespace KaliskaHaven.Database.Migrations
                     b.HasOne("KaliskaHaven.Database.Economy.Wallet", null)
                         .WithMany("DbCurrencies")
                         .HasForeignKey("WalletID");
+                });
+
+            modelBuilder.Entity("KaliskaHaven.Database.Economy.TransactionRecord", b =>
+                {
+                    b.HasOne("KaliskaHaven.Database.Economy.DbCurrency", "Deposited")
+                        .WithMany()
+                        .HasForeignKey("DepositedID");
+
+                    b.HasOne("KaliskaHaven.Database.Economy.Wallet", "From")
+                        .WithMany()
+                        .HasForeignKey("FromID");
+
+                    b.HasOne("KaliskaHaven.Database.Economy.Wallet", "To")
+                        .WithMany()
+                        .HasForeignKey("ToID");
+
+                    b.HasOne("KaliskaHaven.Database.Economy.DbCurrency", "Withdrawn")
+                        .WithMany()
+                        .HasForeignKey("WithdrawnID");
+
+                    b.Navigation("Deposited");
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
+
+                    b.Navigation("Withdrawn");
                 });
 
             modelBuilder.Entity("KaliskaHaven.Database.Economy.Wallet", b =>

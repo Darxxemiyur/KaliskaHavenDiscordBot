@@ -51,17 +51,14 @@ namespace KaliskaHaven.Database.Economy
 			if (DbCurrencies == null)
 				throw new InvalidOperationException();
 
-			DbCurrency? curr;
-			curr = DbCurrencies.FirstOrDefault(x => x.CurrencyType == currency.CurrencyType);
+			var curr = DbCurrencies.FirstOrDefault(x => x.CurrencyType == currency.CurrencyType);
+
 			if (curr == null)
-				DbCurrencies.Add(curr = new DbCurrency {
-					CurrencyType = currency.CurrencyType,
-					Quantity = 0,
-				});
+				DbCurrencies.Add(curr = new DbCurrency(currency.CurrencyType, 0));
 
 			curr.Quantity += currency.Quantity;
 
-			return new TransactionRecord(new TransactionLog(TranscationKind.Deposit, this, currency));
+			return new TransactionRecord(new TransactionLog(TranscationKind.Deposit, this, new DbCurrency(currency)));
 		});
 
 		public Task<Currency?> Get(CurrencyType currency) => MyTaskExtensions.RunOnScheduler(() => {
@@ -88,12 +85,34 @@ namespace KaliskaHaven.Database.Economy
 
 			var curr = DbCurrencies.FirstOrDefault(x => x.CurrencyType == currency.CurrencyType);
 
+			var freshCurrency = new DbCurrency(currency);
+
 			if (curr == null || curr.Quantity < currency.Quantity)
-				return new TransactionLog(TranscationKind.FailedWithdrawal, this, currency);
+				return new TransactionLog(TranscationKind.FailedWithdrawal, this, freshCurrency);
 
 			curr.Quantity -= currency.Quantity;
 
-			return new TransactionLog(TranscationKind.Withdrawal, this, currency);
+			return new TransactionLog(TranscationKind.Withdrawal, this, freshCurrency);
+		}));
+
+		public async Task<IIdentifiable<ITransactionLog>> Transfer(IDbWallet receiver, Currency currency) => new TransactionRecord(await MyTaskExtensions.RunOnScheduler(() => {
+			if (DbCurrencies == null)
+				throw new InvalidOperationException();
+			var receiverCurr = receiver.DbCurrencies.FirstOrDefault(x => x.CurrencyType == currency.CurrencyType);
+			var senderCurr = DbCurrencies.FirstOrDefault(x => x.CurrencyType == currency.CurrencyType);
+
+			var freshCurrency = new DbCurrency(currency);
+
+			if (senderCurr == null || senderCurr.Quantity < currency.Quantity)
+				return new TransactionLog(TranscationKind.FailedTransfer, this, receiver, freshCurrency, freshCurrency);
+
+			if (receiverCurr == null)
+				receiver.DbCurrencies.Add(receiverCurr = new DbCurrency(currency.CurrencyType, 0));
+
+			senderCurr.Quantity -= currency.Quantity;
+			receiverCurr.Quantity += currency.Quantity;
+
+			return new TransactionLog(TranscationKind.Transfer, this, receiver, freshCurrency, freshCurrency);
 		}));
 	}
 }

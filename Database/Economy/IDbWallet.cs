@@ -18,5 +18,12 @@ namespace KaliskaHaven.Database.Economy
 		public Person Owner {
 			get;
 		}
+
+		/// <summary>
+		/// Transfer 
+		/// </summary>
+		/// <param name="currency"></param>
+		/// <returns>Transaction</returns>
+		Task<IIdentifiable<ITransactionLog>> Transfer(IDbWallet receiver, Currency currency);
 	}
 }

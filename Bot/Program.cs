@@ -1,6 +1,5 @@
 ﻿using DisCatSharp.EventArgs;
 
-using KaliskaHaven.Database;
 using KaliskaHaven.DiscordClient;
 using KaliskaHaven.DiscordClient.SessionChannels;
 using KaliskaHaven.DiscordUI.EconomyUI;
@@ -28,6 +27,9 @@ namespace KaliskaHaven.Bot
 
 		public async Task RunRunnable(CancellationToken token = default)
 		{
+			await using (var db = await _services.GetKaliskaDB())
+				await db.Database.MigrateAsync();
+
 			await _services.Initialize();
 
 			var sc = new MySingleThreadSyncContext();
@@ -40,21 +42,15 @@ namespace KaliskaHaven.Bot
 			var kali = await _services.GetKaliskaBot();
 
 			var ch = new BareMessageChannel(kali, 1083244585410637885, null);
-			var bot = await _services.GetKaliskaBot();
-			var r = await bot.GetEventRouter<ReadyEventArgs>();
+			var r = await kali.GetEventRouter<ReadyEventArgs>();
 
 			var reb = await r.PlaceRequest();
 
 			await reb.GetItem();
 
-			var p = await (await bot.GetClient()).GetUserAsync(860897395109789706);
+			var p = await (await kali.GetClient()).GetUserAsync(860897395109789706);
 
-			var net = new Balance(ch, p) as INodeNetwork;
-
-			await using (var db = new KaliskaDB())
-			{
-				await db.Database.MigrateAsync();
-			}
+			var net = new Balance(_services, ch, p) as INodeNetwork;
 
 			await net.RunNetwork();
 		}

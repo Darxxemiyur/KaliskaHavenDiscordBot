@@ -8,6 +8,11 @@ public record EcoTellMessage(EcoTellMsgEnum Type) : ITellMessage
 		get;
 	}
 	public object? Message => Type;
+
+	IIdentifiable<object?>? ITellMessage.Message {
+		get;
+	}
+
 	public static implicit operator TellMessage(EcoTellMessage msg) => new(msg);
 }
 

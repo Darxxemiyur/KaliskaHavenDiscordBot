@@ -16,11 +16,11 @@ namespace KaliskaHaven.Economy
 			get;
 		}
 
-		public Currency? Withdrawn {
+		public IIdentifiable<Currency>? Withdrawn {
 			get;
 		}
 
-		public Currency? Deposited {
+		public IIdentifiable<Currency>? Deposited {
 			get;
 		}
 	}

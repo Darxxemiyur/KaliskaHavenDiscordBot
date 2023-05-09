@@ -18,6 +18,7 @@ namespace KaliskaHaven.Glue.Economy
 			var uc = await _args.Services.GetUserCreator(new Social.UserCreatorArgs(_args.Services, _args.KaliskaDB));
 			var person = await uc.EnsureCreated(user);
 			var wallet = await this.EnsureCreated(person);
+			await wallet.EnsureFullyLoaded();
 
 			return (person, wallet);
 		}

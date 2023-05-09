@@ -5,16 +5,16 @@ namespace KaliskaHaven.Economy;
 public interface IWallet
 {
 	/// <summary>
-	/// Deposit currency to wallet. Always returns the total ammount.
+	/// Deposit currency to wallet.
 	/// </summary>
 	/// <param name="currency"></param>
-	/// <returns></returns>
+	/// <returns>Transaction</returns>
 	Task<IIdentifiable<ITransactionLog>> Deposit(Currency currency);
 
 	/// <summary>
 	/// </summary>
 	/// <param name="currency"></param>
-	/// <returns></returns>
+	/// <returns>Transaction</returns>
 	Task<IIdentifiable<ITransactionLog>> Withdraw(Currency currency);
 
 	/// <summary>

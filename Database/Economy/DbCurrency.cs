@@ -13,20 +13,21 @@ namespace KaliskaHaven.Database.Economy
 			get; set;
 		}
 
-		public Type Type {
-			get;
-		} = typeof(DbCurrency);
+		public Type Type => typeof(DbCurrency);
 
-		public DbCurrency()
+		public DbCurrency(Currency currency) : this(currency.CurrencyType, currency.Quantity)
 		{
 		}
 
-		public DbCurrency(Currency currency)
+		public DbCurrency(CurrencyType currencyType, long quantity) : base(currencyType, quantity)
+		{
+		}
+
+		//TODO: Make it possible to retrieve DbCurrency via some mechanism (like IMessageCommunicable or new one.)
+		public DbCurrency(IIdentifiable<Currency> currency) : base(currency.Identifyable!.CurrencyType, currency.Identifyable!.Quantity)
 		{
 			if (currency is DbCurrency db)
 				ID = db.ID;
-			Quantity = currency.Quantity;
-			CurrencyType = currency.CurrencyType;
 		}
 
 		public bool Equals<TId>(IIdentifiable<TId> to) => throw new NotImplementedException();

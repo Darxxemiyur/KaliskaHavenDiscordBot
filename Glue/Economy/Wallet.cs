@@ -3,47 +3,12 @@ using KaliskaHaven.Database.Economy;
 using KaliskaHaven.Database.Entities;
 using KaliskaHaven.Economy;
 
-using Name.Bayfaderix.Darxxemiyur.Async;
-using Name.Bayfaderix.Darxxemiyur.Extensions;
 using Name.Bayfaderix.Darxxemiyur.General;
 
 namespace KaliskaHaven.Glue.Economy
 {
 	public sealed class Wallet : IDbWallet
 	{
-		private static readonly MySingleThreadSyncContext s_My = new(ThreadPriority.Lowest);
-
-		public static async Task<Stream> GetWalletImage(Wallet wallet, string currencies, string username, string userUrl) => await MyTaskExtensions.RunOnScheduler(new Func<Task<Stream>>(async () => {
-			using var hc = new HttpClient();
-			using var iconImgH = await hc.GetAsync(userUrl);
-			using var iconImg = await iconImgH.Content.ReadAsStreamAsync();
-
-			using var memii = new MemoryStream();
-			await iconImg.CopyToAsync(memii);
-			memii.Seek(0, SeekOrigin.Begin);
-
-			using var icoImg = await Image.LoadAsync(memii);
-			using var img = new Image<Rgba32>(500, 300);
-
-			await MyTaskExtensions.RunOnScheduler(() => {
-				icoImg.Mutate(x => {
-					var s = new Size(120, 120);
-					x.Resize(s);
-				});
-				img.Mutate(x => {
-					using var bg = new Image<Rgba32>(img.Size.Width, img.Size.Height);
-					bg.Mutate(y => y.BackgroundColor(new Color(new Rgba32(255 / 2, 255 / 2, 255 / 2))));
-					x.DrawImage(bg, new Point(0, 0), .5f);
-					x.DrawImage(icoImg, new Point(img.Size.Width - 120, 0), 1f);
-				});
-			});
-
-			var ms = new MemoryStream();
-			await img.SaveAsPngAsync(ms);
-			ms.Seek(0, SeekOrigin.Begin);
-			return ms;
-		}), default, await s_My.MyTaskSchedulerPromise);
-
 		private readonly KaliskaDB _db;
 		private readonly Database.Economy.Wallet _wallet;
 
@@ -77,6 +42,8 @@ namespace KaliskaHaven.Glue.Economy
 		{
 			await this.EnsureFullyLoaded();
 			var transaction = await _wallet.Deposit(currency);
+			if (transaction is TransactionRecord record)
+				await _db.TransactionRecords.AddAsync(record);
 			await _db.SaveChangesAsync();
 			return transaction;
 		}
@@ -100,6 +67,23 @@ namespace KaliskaHaven.Glue.Economy
 		{
 			await this.EnsureFullyLoaded();
 			var transaction = await _wallet.Withdraw(currency);
+			if (transaction is TransactionRecord record)
+				await _db.TransactionRecords.AddAsync(record);
+			await _db.SaveChangesAsync();
+			return transaction;
+		}
+
+		public async Task<IIdentifiable<ITransactionLog>> Transfer(IDbWallet receiver, Currency currency)
+		{
+			await this.EnsureFullyLoaded();
+			if (receiver is Wallet wl)
+			{
+				receiver = wl._wallet;
+				await wl.EnsureFullyLoaded();
+			}
+			var transaction = await _wallet.Transfer(receiver, currency);
+			if (transaction is TransactionRecord record)
+				await _db.TransactionRecords.AddAsync(record);
 			await _db.SaveChangesAsync();
 			return transaction;
 		}
