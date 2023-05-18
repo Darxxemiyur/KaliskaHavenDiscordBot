@@ -15,7 +15,7 @@ namespace KaliskaHaven.Database.Economy
 			get;
 		}
 
-		public Person Owner {
+		public Person? Owner {
 			get;
 		}
 

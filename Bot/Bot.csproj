@@ -19,7 +19,6 @@
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\DiscordBot\DiscordClient.csproj" />
     <ProjectReference Include="..\DiscordUI\DiscordUI.csproj" />
-    <ProjectReference Include="..\DisUILangs\DisUILangs.csproj" />
     <ProjectReference Include="..\MyLib\BayfaderixCommon01\BayfaderixCommon01.csproj" />
   </ItemGroup>
 
