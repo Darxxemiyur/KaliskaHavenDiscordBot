@@ -15,12 +15,14 @@ public interface IGluedNetwork : INodeNetwork
 	NodeNetworkCache Cache {
 		get;
 	}
+
 	/// <summary>
 	/// Glued network persistant data.
 	/// </summary>
 	NodeNetworkPersistant Persistant {
 		get;
 	}
+
 	/// <summary>
 	/// Glued network services.
 	/// </summary>
@@ -34,7 +36,6 @@ public interface IGluedNetwork : INodeNetwork
 /// </summary>
 public abstract class NodeNetworkCache
 {
-
 }
 
 /// <summary>
@@ -44,6 +45,7 @@ public abstract class NodeNetworkCache
 public abstract class NodeNetworkPersistant : ISerializable
 {
 	public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
+
 	protected NodeNetworkPersistant(SerializationInfo info, StreamingContext context)
 	{
 	}
@@ -54,6 +56,4 @@ public abstract class NodeNetworkPersistant : ISerializable
 /// </summary>
 public abstract class NodeNetworkServices
 {
-
 }
-

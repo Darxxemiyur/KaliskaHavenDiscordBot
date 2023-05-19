@@ -8,7 +8,9 @@ public abstract class Permission : IEquatable<Permission>
 	public abstract string PermissionKind {
 		get;
 	}
+
 	public static bool operator ==(Permission left, Permission right) => left.PermissionKind == right.PermissionKind;
+
 	public static bool operator !=(Permission left, Permission right) => left.PermissionKind != right.PermissionKind;
 
 	public override bool Equals(object? obj)

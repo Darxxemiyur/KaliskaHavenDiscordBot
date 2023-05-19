@@ -9,6 +9,7 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 		public bool IsUsable {
 			get;
 		}
+
 		public IMessageCommunicable Comms {
 			get;
 		}
@@ -42,6 +43,5 @@ namespace KaliskaHaven.DiscordClient.SessionChannels
 		public TNewSessionChannel TransformAs<TNewSessionChannel>() where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
 
 		public bool TryTransformAs<TNewSessionChannel>(out TNewSessionChannel channel) where TNewSessionChannel : IServiceProvider => throw new NotImplementedException();
-
 	}
 }

@@ -12,6 +12,7 @@ namespace KaliskaHaven.Glue.Social
 		private readonly UserCreatorArgs _args;
 
 		public UserCreator(UserCreatorArgs args) => _args = args;
+
 		public async Task<Person> EnsureCreated(DiscordUser user)
 		{
 			var db = _args.KaliskaDB ?? await _args.Services.GetKaliskaDB();
@@ -31,5 +32,6 @@ namespace KaliskaHaven.Glue.Social
 			return person;
 		}
 	}
+
 	public sealed record class UserCreatorArgs(IGlueServices Services, KaliskaDB? KaliskaDB);
 }

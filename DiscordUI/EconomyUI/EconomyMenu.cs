@@ -13,7 +13,6 @@ using Name.Bayfaderix.Darxxemiyur.Node.Network;
 
 namespace KaliskaHaven.DiscordUI.EconomyUI;
 
-
 public sealed class EconomyMenu : IGluedNetwork
 {
 	private readonly BareMessageChannel _ch;
@@ -23,9 +22,11 @@ public sealed class EconomyMenu : IGluedNetwork
 	public NodeNetworkCache Cache {
 		get;
 	}
+
 	public NodeNetworkPersistant Persistant {
 		get;
 	}
+
 	public NodeNetworkServices Services {
 		get;
 	}

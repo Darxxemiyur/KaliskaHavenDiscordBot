@@ -22,6 +22,7 @@ namespace KaliskaHaven.Database
 		public ExternalOnFinalization<DBCacheNode> Finalization {
 			get;
 		}
+
 		internal DBCacheNode() => Finalization = new(this);
 	}
 
@@ -38,7 +39,6 @@ namespace KaliskaHaven.Database
 				var node = await _relay.GetData(token);
 				_cache.Remove(node.Self.ThrowIfNull());
 				await node.DBBackend.ThrowIfNull().DisposeAsync();
-
 			}
 		}
 

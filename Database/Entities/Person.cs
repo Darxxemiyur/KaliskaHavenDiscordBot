@@ -30,10 +30,10 @@ public sealed class Person : IUser
 	public Type Type {
 		get;
 	} = typeof(Person);
+
 	public IAsyncEnumerable<Permission> Permissions {
 		get;
 	}
-
 
 	public bool Equals<TId>(IIdentifiable<TId> to) => to is Person si && si.ID == ID;
 }
