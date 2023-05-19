@@ -29,5 +29,7 @@ public sealed class Group : IGroup
 		get;
 	} = typeof(Group);
 
+	public IAsyncEnumerable<Permission> Permissions => Identifyable.Permissions;
+
 	public bool Equals<TId>(IIdentifiable<TId> to) => to is Group si && si.ID == ID;
 }

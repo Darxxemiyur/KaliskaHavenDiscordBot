@@ -86,6 +86,17 @@ public class BareMessageChannel : ISessionChannel
 				return false;
 			})) as EventBus<TEvent>;
 		}
+
+		if (typeof(TEvent).IsEquivalentTo(typeof(InteractionCreateEventArgs)))
+		{
+			var router = await _kaliska.GetEventRouter<InteractionCreateEventArgs>();
+
+			return (await router.PlaceRequest(async x => {
+				if (_messageId != null && (await x.Interaction.GetOriginalResponseAsync())?.Id == _messageId)
+					return true;
+				return false;
+			})) as EventBus<TEvent>;
+		}
 #pragma warning restore CS8603 // Possible null reference return.
 		throw new NotSupportedException();
 	}

@@ -74,6 +74,8 @@ namespace KaliskaHaven.Database
 				x.HasKey(y => y.ID);
 				x.Property(y => y.ID).UseIdentityByDefaultColumn();
 				x.HasOne(y => y.Wallet).WithOne(y => y.Owner).HasForeignKey<Wallet>(y => y.OwnerID).IsRequired(false);
+				x.Ignore(y => y.Permissions);
+				x.Ignore(y => y.Groups);
 			});
 
 			modelBuilder.Entity<TransactionRecord>(x => {
@@ -81,8 +83,10 @@ namespace KaliskaHaven.Database
 				x.Property(y => y.ID).UseIdentityByDefaultColumn();
 				x.HasOne(y => y.Deposited);
 				x.HasOne(y => y.Withdrawn);
-				x.HasOne(y => y.To);
-				x.HasOne(y => y.From);
+				x.HasOne(y => y.ToW);
+				x.HasOne(y => y.FromW);
+				x.Ignore(y => y.To);
+				x.Ignore(y => y.From);
 			});
 
 			modelBuilder.Entity<DbCurrency>(x => {

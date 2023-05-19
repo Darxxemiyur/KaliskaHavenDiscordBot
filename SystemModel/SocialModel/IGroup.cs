@@ -7,4 +7,7 @@ public interface IGroup : IIdentifiable<IGroup>
 	IAsyncEnumerable<IIdentifiable<IUser>> Members {
 		get;
 	}
+	IAsyncEnumerable<Permission> Permissions {
+		get;
+	}
 }
