@@ -2,7 +2,6 @@
 using DisCatSharp.EventArgs;
 
 using KaliskaHaven.Database;
-using KaliskaHaven.Database.Economy;
 using KaliskaHaven.DiscordClient;
 using KaliskaHaven.DiscordClient.SessionChannels;
 using KaliskaHaven.Glue;
@@ -14,11 +13,22 @@ using Name.Bayfaderix.Darxxemiyur.Node.Network;
 
 namespace KaliskaHaven.DiscordUI.EconomyUI;
 
-public sealed class EconomyMenu : INodeNetwork
+
+public sealed class EconomyMenu : IGluedNetwork
 {
 	private readonly BareMessageChannel _ch;
 	private readonly DiscordUser _user;
 	private readonly IGlueServices _gs;
+
+	public NodeNetworkCache Cache {
+		get;
+	}
+	public NodeNetworkPersistant Persistant {
+		get;
+	}
+	public NodeNetworkServices Services {
+		get;
+	}
 
 	public EconomyMenu(IGlueServices gs, BareMessageChannel channel, DiscordUser user)
 	{
@@ -46,14 +56,14 @@ public sealed class EconomyMenu : INodeNetwork
 
 		msg.AddEmbed(new DiscordEmbedBuilder().WithDescription("Please select operation:"));
 
-		var operations = new (DiscordStringSelectComponentOption, Permission)[] {
-			(new DiscordStringSelectComponentOption("Deposit", "deposit"), new EconomyPermission.Deposit()),
-			(new DiscordStringSelectComponentOption("Withdraw", "withdraw"), new EconomyPermission.Withdraw()),
-			(new DiscordStringSelectComponentOption("Transfer", "transfer"), new EconomyPermission.Transfer()),
-			(new DiscordStringSelectComponentOption("Convert","convert"), new  EconomyPermission.Convert())
+		var operations = new (DiscordStringSelectComponentOption Option, Permission Perm, Func<StepInfo?, KaliskaDB, Task<StepInfo?>> Delegate)[] {
+			(new DiscordStringSelectComponentOption("Deposit", "deposit"), new EconomyPermission.Deposit(), this.Deposit),
+			(new DiscordStringSelectComponentOption("Withdraw", "withdraw"), new EconomyPermission.Withdraw(), this.Withdraw),
+			(new DiscordStringSelectComponentOption("Transfer", "transfer"), new EconomyPermission.Transfer(), this.Transfer),
+			(new DiscordStringSelectComponentOption("Convert","convert"), new  EconomyPermission.Convert(), this.Convert)
 		};
 
-		msg.AddComponents(new DiscordStringSelectComponent("Operation:", operations.Select(x => x.Item1)));
+		msg.AddComponents(new DiscordStringSelectComponent("Operation:", operations.Select(x => x.Option)));
 
 		await _ch.SendMessage(msg);
 
@@ -72,6 +82,7 @@ public sealed class EconomyMenu : INodeNetwork
 
 		return new StepInfo<KaliskaDB, StepInfo, StepInfo, Permission>(this.CheckPermissions, db, new StepInfo<KaliskaDB>(this.Deposit, db), new StepInfo<KaliskaDB>(this.EntryMenu, db), new EconomyPermission.Deposit());
 	}
+
 	private async Task<StepInfo?> CheckPermissions(StepInfo? prev, KaliskaDB db, StepInfo onSuccess, StepInfo onFail, Permission permReq)
 	{
 		var uc = await _gs.GetUserCreator(new UserCreatorArgs(_gs, db));
@@ -82,15 +93,23 @@ public sealed class EconomyMenu : INodeNetwork
 				return onSuccess;
 		return onFail;
 	}
+
 	private async Task<StepInfo?> Deposit(StepInfo? prev, KaliskaDB db)
 	{
 		throw new NotImplementedException();
 	}
+
 	private async Task<StepInfo?> Withdraw(StepInfo? prev, KaliskaDB db)
 	{
 		throw new NotImplementedException();
 	}
+
 	private async Task<StepInfo?> Transfer(StepInfo? prev, KaliskaDB db)
+	{
+		throw new NotImplementedException();
+	}
+
+	private async Task<StepInfo?> Convert(StepInfo? prev, KaliskaDB db)
 	{
 		throw new NotImplementedException();
 	}
