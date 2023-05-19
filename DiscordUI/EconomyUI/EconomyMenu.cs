@@ -3,7 +3,6 @@ using DisCatSharp.EventArgs;
 
 using KaliskaHaven.Database;
 using KaliskaHaven.DiscordClient;
-using KaliskaHaven.DiscordClient.SessionChannels;
 using KaliskaHaven.Glue;
 using KaliskaHaven.Glue.Economy;
 using KaliskaHaven.Glue.Social;
@@ -15,7 +14,7 @@ namespace KaliskaHaven.DiscordUI.EconomyUI;
 
 public sealed class EconomyMenu : IGluedNetwork
 {
-	private readonly BareMessageChannel _ch;
+	private readonly ISessionChannel _ch;
 	private readonly DiscordUser _user;
 	private readonly IGlueServices _gs;
 
@@ -31,7 +30,7 @@ public sealed class EconomyMenu : IGluedNetwork
 		get;
 	}
 
-	public EconomyMenu(IGlueServices gs, BareMessageChannel channel, DiscordUser user)
+	public EconomyMenu(IGlueServices gs, ISessionChannel channel, DiscordUser user)
 	{
 		_gs = gs;
 		_user = user;

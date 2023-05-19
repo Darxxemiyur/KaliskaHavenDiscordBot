@@ -7,7 +7,7 @@ namespace KaliskaHaven.Database
 {
 	internal sealed class DBCacheNode
 	{
-		public KaliskaDBBackend? DBBackend {
+		public IKaliskaDBBackend? DBBackend {
 			get; set;
 		}
 
