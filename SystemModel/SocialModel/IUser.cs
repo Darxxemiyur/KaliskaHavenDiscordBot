@@ -8,7 +8,7 @@ public interface IUser : IIdentifiable<IUser>
 		get;
 	}
 
-	IAsyncEnumerable<Permission> Permissions {
+	IAcquirable<ICollection<Permission>> Permissions {
 		get;
 	}
 }

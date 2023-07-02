@@ -28,9 +28,7 @@ public sealed class Person : IUser
 		get;
 	} = typeof(Person);
 
-	public IAsyncEnumerable<Permission> Permissions {
-		get;
-	}
+	public IAcquirable<ICollection<Permission>> Permissions => throw new NotImplementedException();
 
 	public bool Equals<TId>(IIdentifiable<TId> to) => to is Person si && si.ID == ID;
 }
