@@ -1,4 +1,5 @@
-﻿using KaliskaHaven.Database.Economy;
+﻿using KaliskaHaven.Database;
+using KaliskaHaven.Database.Economy;
 using KaliskaHaven.Database.Entities;
 using KaliskaHaven.Database.Shop;
 
@@ -6,9 +7,9 @@ using LinqToDB.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace KaliskaHaven.Database;
+namespace TestingCommon;
 
-internal class KaliskaDBBackend : DbContext, IKaliskaDBBackend
+public class DatabaseMock : DbContext, IKaliskaDBBackend
 {
 	public DbSet<ShopItem> ShopItems {
 		get; set;
@@ -30,7 +31,7 @@ internal class KaliskaDBBackend : DbContext, IKaliskaDBBackend
 		get; set;
 	}
 
-	public KaliskaDBBackend()
+	public DatabaseMock()
 	{
 	}
 
@@ -57,7 +58,7 @@ internal class KaliskaDBBackend : DbContext, IKaliskaDBBackend
 		cstrs.AddLast("Maximum Pool Size=1000");
 		cstrs.AddLast("Connection Lifetime=3600");
 
-		optionsBuilder.UseNpgsql(string.Join(";", cstrs));
+		optionsBuilder.UseInMemoryDatabase(usr);
 		optionsBuilder.UseLinqToDB();
 	}
 

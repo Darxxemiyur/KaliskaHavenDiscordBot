@@ -37,6 +37,7 @@ public abstract class DistributedNodeNetworkNode : IGeneralStepInfo, ISerializab
 	public abstract DNNNodeClass Class {
 		get;
 	}
+
 	protected DistributedNodeNetworkNode()
 	{
 	}

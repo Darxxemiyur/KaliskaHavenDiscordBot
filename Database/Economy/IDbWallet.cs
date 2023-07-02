@@ -20,7 +20,7 @@ namespace KaliskaHaven.Database.Economy
 		}
 
 		/// <summary>
-		/// Transfer 
+		/// Transfer
 		/// </summary>
 		/// <param name="currency"></param>
 		/// <returns>Transaction</returns>

@@ -126,7 +126,11 @@ namespace KaliskaHaven.DiscordClient
 		/// Get's placed inside events.
 		/// </summary>
 		/// <returns></returns>
-		public Task<TEvent> GetItem() => _pouch.GetData(_token);
+		public async Task<TEvent> GetItem(CancellationToken token = default)
+		{
+			using var tokenS = CancellationTokenSource.CreateLinkedTokenSource(_token, token);
+			return await _pouch.GetData(tokenS.Token);
+		}
 
 		public Task<bool> HasAny() => _pouch.HasAny();
 

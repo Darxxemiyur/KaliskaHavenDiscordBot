@@ -7,4 +7,8 @@ public interface IUser : IIdentifiable<IUser>
 	IAcquirable<ICollection<IGroup>> Groups {
 		get;
 	}
+
+	IAsyncEnumerable<Permission> Permissions {
+		get;
+	}
 }

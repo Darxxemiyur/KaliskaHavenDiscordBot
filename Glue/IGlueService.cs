@@ -28,4 +28,3 @@ public interface IGlueServices : IMyServices
 	/// <returns></returns>
 	Task<UserCreator> GetUserCreator(UserCreatorArgs args);
 }
-

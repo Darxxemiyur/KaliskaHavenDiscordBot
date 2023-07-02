@@ -92,7 +92,9 @@ namespace KaliskaHaven.DiscordClient
 		}
 
 		public Task<KaliskaDB> GetKaliskaDB() => _dbCache.Create();
+
 		public async Task<WalletCreator> GetWalletCreator(KaliskaDB db) => new(new(this, db));
+
 		public async Task<UserCreator> GetUserCreator(UserCreatorArgs args) => new(args);
 
 		public interface IDbFactory<TDatabase> where TDatabase : class

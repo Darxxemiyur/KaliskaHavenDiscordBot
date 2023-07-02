@@ -7,7 +7,7 @@ namespace KaliskaHaven.Database
 {
 	internal sealed class DBCacheNode
 	{
-		public KaliskaDBBackend? DBBackend {
+		public IKaliskaDBBackend? DBBackend {
 			get; set;
 		}
 
@@ -22,6 +22,7 @@ namespace KaliskaHaven.Database
 		public ExternalOnFinalization<DBCacheNode> Finalization {
 			get;
 		}
+
 		internal DBCacheNode() => Finalization = new(this);
 	}
 

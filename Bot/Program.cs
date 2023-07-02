@@ -34,7 +34,7 @@ namespace KaliskaHaven.Bot
 
 			var sc = new MySingleThreadSyncContext();
 
-			await await MyTaskExtensions.RunOnScheduler(() => Task.WhenAny(_services.RunRunnable(), RunTest()), scheduler: await sc.MyTaskSchedulerPromise);
+			await await MyTaskExtensions.RunOnScheduler(() => Task.WhenAny(_services.RunRunnable(), this.RunTest()), scheduler: await sc.MyTaskSchedulerPromise);
 		}
 
 		private async Task RunTest()
@@ -50,7 +50,7 @@ namespace KaliskaHaven.Bot
 
 			var p = await (await kali.GetClient()).GetUserAsync(860897395109789706);
 
-			var net = new Balance(_services, ch, p) as INodeNetwork;
+			var net = new EconomyMenu(_services, ch, p) as INodeNetwork;
 
 			await net.RunNetwork();
 		}
