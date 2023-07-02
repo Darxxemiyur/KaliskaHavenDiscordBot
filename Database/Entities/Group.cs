@@ -10,14 +10,7 @@ public sealed class Group : IGroup
 		get; set;
 	}
 
-	IAsyncEnumerable<IIdentifiable<IUser>> IGroup.Members => this.GetIdentifyablesAsync();
-
-	private async IAsyncEnumerable<IIdentifiable<IUser>> GetIdentifyablesAsync()
-	{
-		foreach (var member in await Task.FromResult(Members))
-			yield return member;
-	}
-
+	IAcquirable<ICollection<IUser>> IGroup.Members => throw new NotImplementedException();
 	public LinkedList<Person> Members {
 		get; set;
 	}

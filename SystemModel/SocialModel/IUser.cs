@@ -4,7 +4,7 @@ namespace KaliskaHaven.SocialModel;
 
 public interface IUser : IIdentifiable<IUser>
 {
-	IAsyncEnumerable<IIdentifiable<IGroup>> Groups {
+	IAcquirable<ICollection<IGroup>> Groups {
 		get;
 	}
 }

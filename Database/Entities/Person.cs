@@ -19,10 +19,7 @@ public sealed class Person : IUser
 		get; set;
 	}
 
-	public IAsyncEnumerable<IIdentifiable<IGroup>> Groups {
-		get;
-	}
-
+	public IAcquirable<ICollection<IGroup>> Groups => throw new NotImplementedException();
 	public IIdentity? Identity => throw new NotImplementedException();
 
 	public IUser? Identifyable => this;

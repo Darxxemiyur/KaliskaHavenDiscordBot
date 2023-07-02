@@ -38,7 +38,6 @@ namespace KaliskaHaven.Database
 				var node = await _relay.GetData(token);
 				_cache.Remove(node.Self.ThrowIfNull());
 				await node.DBBackend.ThrowIfNull().DisposeAsync();
-
 			}
 		}
 
@@ -46,8 +45,8 @@ namespace KaliskaHaven.Database
 		{
 			await using var __ = await _lock.ScopeAsyncLock();
 			var node = new DBCacheNode();
-			node.DBBackend = new KaliskaDBBackend();
 			var db = new KaliskaDB(node);
+			node.DBBackend = new KaliskaDBBackend();
 			node.Facade = new(db);
 			node.Self = _cache.AddLast(node);
 			node.Finalization.Actions.AddLast((x) => MyTaskExtensions.RunOnScheduler(() => _relay.Handle(x)));

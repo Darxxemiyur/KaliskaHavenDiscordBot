@@ -54,7 +54,7 @@ public sealed class Balance : INodeNetwork
 	}
 	private async Task<StepInfo?> Deposit(StepInfo? prev, KaliskaDB db)
 	{
-
+		throw new NotImplementedException();
 	}
 	private string GetCurrencyList(IEnumerable<DbCurrency> currs) => string.Join("\n", currs.Select(x => $"{x.CurrencyType} - {x.Quantity}") is var fs && fs.Any() ? fs : new string[] { "No currencies." });
 }
