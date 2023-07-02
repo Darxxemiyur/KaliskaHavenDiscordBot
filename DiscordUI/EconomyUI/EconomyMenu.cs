@@ -88,9 +88,11 @@ public sealed class EconomyMenu : IGluedNetwork
 		var uc = await _gs.GetUserCreator(new UserCreatorArgs(_gs, db));
 		var user = await uc.EnsureCreated(_user);
 
-		await foreach (var perm in user.Permissions)
-			if (perm == permReq)
-				return onSuccess;
+		var perms = await user.Permissions.Acquire();
+		if (perms != null && perms.Identifyable != null)
+			foreach (var perm in perms.Identifyable)
+				if (perm == permReq)
+					return onSuccess;
 		return onFail;
 	}
 
