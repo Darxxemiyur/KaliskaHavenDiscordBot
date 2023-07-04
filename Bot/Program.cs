@@ -28,7 +28,7 @@ namespace KaliskaHaven.Bot
 		public async Task RunRunnable(CancellationToken token = default)
 		{
 			await using (var db = await _services.GetKaliskaDB())
-				await db.Database.MigrateAsync();
+				await db.Database.MigrateAsync(token);
 
 			await _services.Initialize();
 

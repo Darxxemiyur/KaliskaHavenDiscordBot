@@ -12,23 +12,11 @@ using Name.Bayfaderix.Darxxemiyur.Node.Network;
 
 namespace KaliskaHaven.DiscordUI.EconomyUI;
 
-public sealed class EconomyMenu : IGluedNetwork
+public sealed class EconomyMenu : GluedNetwork
 {
 	private readonly ISessionChannel _ch;
 	private readonly DiscordUser _user;
 	private readonly IGlueServices _gs;
-
-	public NodeNetworkCache Cache {
-		get;
-	}
-
-	public NodeNetworkPersistant Persistant {
-		get;
-	}
-
-	public NodeNetworkServices Services {
-		get;
-	}
 
 	public EconomyMenu(IGlueServices gs, ISessionChannel channel, DiscordUser user)
 	{
@@ -37,7 +25,7 @@ public sealed class EconomyMenu : IGluedNetwork
 		_ch = channel;
 	}
 
-	public StepInfo GetStartingInstruction() => new(this.Initialize);
+	public override StepInfo GetStartingInstruction() => new(this.Initialize);
 
 	private async Task<StepInfo?> Initialize(StepInfo? prev)
 	{
@@ -47,7 +35,6 @@ public sealed class EconomyMenu : IGluedNetwork
 
 	private async Task<StepInfo?> EntryMenu(StepInfo? prev, KaliskaDB db)
 	{
-		var usri = (ulong)70349108077924352;
 		var bt = await _gs.GetKaliskaBot();
 		var cl = await bt.GetClient();
 
@@ -60,7 +47,7 @@ public sealed class EconomyMenu : IGluedNetwork
 			(new DiscordStringSelectComponentOption("Deposit", "deposit"), new EconomyPermission.Deposit(), this.Deposit),
 			(new DiscordStringSelectComponentOption("Withdraw", "withdraw"), new EconomyPermission.Withdraw(), this.Withdraw),
 			(new DiscordStringSelectComponentOption("Transfer", "transfer"), new EconomyPermission.Transfer(), this.Transfer),
-			(new DiscordStringSelectComponentOption("Convert","convert"), new  EconomyPermission.Convert(), this.Convert)
+			(new DiscordStringSelectComponentOption("Convert", "convert"), new  EconomyPermission.Convert(), this.Convert)
 		};
 
 		msg.AddComponents(new DiscordStringSelectComponent("Operation:", operations.Select(x => x.Option)));
@@ -89,7 +76,7 @@ public sealed class EconomyMenu : IGluedNetwork
 		var user = await uc.EnsureCreated(_user);
 
 		var perms = await user.Permissions.Acquire();
-		if (perms != null && perms.Identifyable != null)
+		if (perms?.Identifyable != null)
 			foreach (var perm in perms.Identifyable)
 				if (perm == permReq)
 					return onSuccess;
@@ -115,4 +102,9 @@ public sealed class EconomyMenu : IGluedNetwork
 	{
 		throw new NotImplementedException();
 	}
+
+	public override Task<GluedNetworkTransferPayload> ArchiveNetwork() => throw new NotImplementedException();
+	public override Task<bool> IsArchived() => throw new NotImplementedException();
+	public override Task<bool> UnArchive(GluedNetworkTransferPayload payload) => throw new NotImplementedException();
+	public override Task<bool> Commit() => throw new NotImplementedException();
 }
