@@ -61,7 +61,7 @@ public sealed class EconomyMenu : GluedNetwork
 		{
 			await sre.GetItem(tokenS.Token);
 		}
-		catch (TaskCanceledException e)
+		catch (TaskCanceledException)
 		{
 			await _ch.SendMessage("Timed out.\nSession closed.");
 			return null;
